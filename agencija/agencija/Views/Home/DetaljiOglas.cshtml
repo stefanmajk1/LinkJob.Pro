@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "DetaljiOglas";
+}
+
+@model agencija.Models.Ogla
+<link href="~/Fronte_End_Stana/KorisceniCSS/DetaljiOglasa.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<p class="glyphicon glyphicon-menu-left" style="margin-left:5%; flex-wrap:wrap;">
+    <a href="javascript:history.back()" id="backLink">
+        Nazad
+    </a>
+</p>
+
+<div class="prva" style="width:50%;">
+    <div class="druga">
+        @if (Model.Kompanija.logo != null)
+        {
+            <h2>
+                @Html.DisplayFor(model => model.naslov)
+            </h2>
+
+            <h2 style="font-size:20px;color:dimgrey;">@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+
+            <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+            var dedline = Model.istice.ToShortDateString();
+            <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+            <hr />
+            <p>@Model.Kompanija.opis</p>
+            <hr />
+            <textarea style="border: none; font-size: 20px; font-family: sans-serif; width:756px; height:400px; max-width:none; overflow:hidden;" readonly>@Model.opis</textarea>
+            <hr />
+            <div id="PlaceHolderHere"></div>
+            <a id="oglasid" class="btn btn-primary" href="@Url.Action("Konkurisi","Home", new { id = Model.idOglas})">Konkurisi</a>
+        }
+        else
+        {
+            <h2>
+                @Html.DisplayFor(model => model.naslov)
+            </h2>
+
+            <h2 style="font-size:20px;color:dimgrey;">@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+            <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+            var dedline = Model.istice.ToShortDateString();
+            <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+            <hr />
+            <p>@Model.Kompanija.opis</p>
+            <hr />
+            <p>@Model.opis</p>
+            <hr />
+            <a id="oglasid" class="btn btn-primary" href="@Url.Action("Konkurisi","Home", new { id = Model.idOglas})">Konkurisi</a>
+        }
+    </div>
+
+</div>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+
+</script>
+<script>
+    var col = 0;
+
+
+    function Toggle1(c) {
+        c.style.color = c.style.color == "red" ? "grey" : "red";
+        return
+        if (col == 0) {
+            document.getElementById("btnh1").style.color = "red";
+            col = 1;
+        } else {
+            document.getElementById("btnh1").style.color = "grey";
+            col = 0;
+        }
+    }
+
+
+    function AddToCart(item) {
+        debugger;
+        var itemId = item;
+        var formData = new FormData();
+        formData.append("ItemId", itemId);
+
+        $.ajax({
+            async: true,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            url: '/Home/DetaljiOglasa',
+            success: function (data) {
+                if (data.success) {
+                    $("#cartItem").text("Cart(" + data.Counter + ")");
+                }
+            },
+            error: function () {
+                console.log("There is a problem!");
+            }
+        })
+
+    }
+    
+
+
+</script>
+
+
+

@@ -1,0 +1,64 @@
+﻿@model agencija.Models.Korisnik
+
+@{
+    ViewBag.Title = "DodajKorisnika";
+}
+
+
+
+@using (Html.BeginForm("DodajKorisnika1", "PoslovniKorisnik", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal" style="margin:0px auto;margin-left:20%;">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label">Ime</label>
+        <input type="text" name="Ime" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Prezime</label>
+        <input type="text" name="Prezime" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">E-mail</label>
+        <input type="text" name="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Telefon</label>
+        <input type="text" name="Telefon" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Username</label>
+        <input type="text" name="Username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Sifra</label>
+        <input type="text" name="Sifra" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Slika</label>
+        <input type="file" name="slika1" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Rola</label>
+        <input type="number" name="idRola" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+

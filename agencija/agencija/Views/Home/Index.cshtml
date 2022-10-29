@@ -1,0 +1,133 @@
+﻿@model PagedList.IPagedList<agencija.Models.Ogla>
+
+
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="container body-content">
+    <div class="pretrazivac">
+        <div class="heder">
+            <h1 class="naslov"> Poslova</h1>
+            <p id="naslov">Pronadjite posao ili zaposlite nekoga</p>
+        </div>
+        <div class="row" id="inputi">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <div class="col-xs-6 col-md-3" id="ispisati">
+
+                    @Html.TextBox("Search_Data", "", new { @class = "form-control", @id = "input", placeholder = "Kljucna rec" })
+
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    @Html.DropDownList("Emp_Dept", ViewBag.Emp_Data as SelectList, "Izaberi mesto", new { @class = "form-control", @id = "combo" })
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    @Html.DropDownList("iskustvo", ViewBag.Emp_Data2 as SelectList, "Iskustvo ", new { @class = "form-control", @id = "combo" })
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <input id="dugme" type="submit" class="btn btn-danger" value="Pretraga" />
+                </div>
+            }
+        </div>
+    </div>@*Kraj Search olgasa*@
+
+
+    @foreach (var item in Model)
+    {
+
+        if (item.omiljen == 1)
+        {
+            <div class="detalji-kompanije" onload="nmp()">
+                <div class="posao">
+                    <h4 style="float:left;">
+                        <a id="oglasid" href="@Url.Action("DetaljiOglas","Home", new { id = item.idOglas})"><b>@item.naslov</b></a>
+                    </h4><br /><br />
+                    <a data-id=@item.omiljen onclick="Toggle1(@item.omiljen)" href="@Url.Action("UbaciOglas","OmiljeniOglasi", new { id = item.idOglas}, null)">
+                        <button style="color: red; background: transparent; border: none; outline: none;" class="btn" id="btnh1">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </a>
+                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = item.Kompanija.IdKompanija})"><p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p></a>
+                    @*<p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>*@<br /><br />
+                    <i class="glyphicon glyphicon-map-marker"></i>
+                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Mesto.naziv)</b></span><br /><br />
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</button>
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            
+            <div class="detalji-kompanije" onload="nmp()">
+                <div class="posao">
+                    <h4 style="float:left;">
+                        <a id="oglasid" href="@Url.Action("DetaljiOglas","Home", new { id = item.idOglas})"><b>@item.naslov</b></a>
+                    </h4><br /><br />
+                    <a onclick="Toggle1(@item.omiljen)" href="@Url.Action("UbaciOglas","OmiljeniOglasi", new { id = item.idOglas}, null)">
+                        <button style="color: grey; background: transparent; border: none; outline: none;" class="btn" id="btnh1">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </a>
+                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = item.Kompanija.IdKompanija})"><p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p></a><br />
+                    @*<p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>*@<br />
+                    <i class="glyphicon glyphicon-map-marker"></i>
+                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Mesto.naziv)</b></span><br /><br />
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</button>
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</button>
+                </div>
+            </div>
+        }
+
+    }
+
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+<script>
+    
+    function Toggle1(c) {
+        var id = this.c;
+
+        c.style.color = c.style.color == "red" ? "grey" : "red";
+
+       
+        return
+    }
+
+    $("#deleteRecord").click(function () {
+        alert("USAO");
+        var StudentId = $(this).data("model-id");
+        var url = "OmiljeniOglasiController/Delete1" + StudentId;
+        $.ajax({
+            url: url,
+            type: 'Delete'
+        }).done(function () {
+            alert("Obrisan")
+        }).error(function () {
+            alert("Neuspesno")
+        });
+    }
+
+</script>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+@*<script src="~/Scripts/pretraga.js"></script>*@
+

@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "SlanjeMejlaPlacanje";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contact</title>
+    <link href="~/Content/contact.css" rel="stylesheet" />
+    <link href="~/Fronte_End_Stana/KorisceniCSS/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+</head>
+<body>
+    <a class="btn btn-default" href="javascript:history.back()" id="backLink" style="border:none; font-size:larger;  margin:10px; padding:10px; font-family:sans-serif; text-decoration:none">
+        <b>Nazad</b>
+    </a>
+    <div class="container">
+        <div class="content-box">
+            <div class="left"></div>
+            <div class="right">
+                <h2>Plaćanje</h2>
+                <input id="naslov" name="naslov" type="text" class="field" value="Oglas: @Model.naslov" style="color:black;" readonly />
+                <input id="email" name="email" type="email" class="field" placeholder="Unesite Vas email" />
+                <p id="errorEmail" class="text-danger" style="font-size: medium;"></p>
+                <p id="errorEmailRegex" class="text-danger" style="font-size: medium;"></p>
+                @*<textarea style="resize:none;" id="msg" name="poruka" class="field" placeholder="Kako Vam mozemo pomoci?"></textarea>*@
+                <label class="field" style="width:65%;">Plaćanje oglasa</label>
+                <select id="Izbor" class="field">
+                    <option value="500">15 dana (500rsd)</option>
+                    <option value="1000">30 dana (1000 rsd)</option>
+                </select>
+                <input class="submit" type="submit" value="Posalji" onclick="SlanjeZaPlacanje(@Model.IdKompanija)" />
+                @*<button class="btn" onclick="sendEmail()">Posalji</button>*@
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+
+    function SlanjeZaPlacanje(IdKompanija) {
+
+        debugger;
+        var IdKompanija = IdKompanija;
+        var naslov = $("#naslov").val();
+        var email = $("#email").val();
+        var Izbor = $("#Izbor").val();
+        var request = $.post("/PoslovniKorisnik/SlanjeMejlaPlacanje1/?IdKompanija=" + IdKompanija + "&naslov=" + escape(naslov) + "&email=" + escape(email) + "&Izbor=" + Izbor + "");
+        request.done(function (rez) {
+            if (rez != 1) {
+                if (rez != 2) {
+                    swal({
+                        title: "Uspešno ste poslali mejl",
+                        text: email,
+                        type: 'info',
+                        confirmButtonText: 'OK'
+                    });
+                    $("#errorEmail").text("");
+                    $("#errorEmailRegex").text("");
+                    $("#email").val("");
+                }
+                else {
+                    $("#errorEmail").text("");
+                    $("#errorEmailRegex").text("Neispravan format E-mail adrese!");
+                }
+            }
+            else {
+                $("#errorEmail").text("Morate uneti E-mail adresu!");
+            }
+        });
+
+    }
+
+</script>
+
+
+
+

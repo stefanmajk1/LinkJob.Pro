@@ -1,0 +1,45 @@
+﻿@model IList<agencija.Models.OmiljeniOglasi>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/srce.css" rel="stylesheet" />
+<link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+<div class="container">
+
+    @if (Model.Count() > 0)
+    {
+        <h1 style="text-align:center; margin-bottom:30px;">Omiljeni oglasi</h1>
+        foreach (var item in Model)
+        {
+            <div class="detalji-kompanije">
+                <div class="posao">
+                    <h4 style="float:left; ">
+                        <a href="@Url.Action("DetaljiOglas","Home", new { id = item.Ogla.idOglas})"><b>@item.Ogla.naslov</b></a>
+                    </h4><br /><br />
+                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = item.Ogla.Kompanija.IdKompanija})"><p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Ogla.Kompanija.naziv)</b></p></a><br /><br />
+
+                    <a class="btn btn-danger" href="@Url.Action("Delete", "OmiljeniOglasi", new { id = item.Ogla.idOglas})">
+                        Obrisi
+                    </a>
+
+                    <i class="glyphicon glyphicon-map-marker"></i>
+                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Ogla.Mesto.naziv)</b></span><br /><br />
+                    
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Ogla.Kategorija.naziv)</button>
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Ogla.Iskustvo.naziv)</button>
+                </div>
+
+            </div>
+
+        }
+    }
+    else
+    {
+        <h1 style="text-align:center; margin-bottom:30px;">Nema omiljenih oglasa</h1>
+    }
+
+</div>
+

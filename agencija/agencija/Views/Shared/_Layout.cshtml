@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/Site.css")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav class="navbar navbar-default" id="navbar">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><b style="color:cornflowerblue">Link.JobPro</b> </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Poslovi</b><span class="caret"></span></a>
+                        <ul class="dropdown-menu" style="color:cornsilk">
+                            <li><a href="@Url.Action("Index", "Poslovi")" target="_blank"><b style="color:gray">Praksa</b></a></li>
+                            <li><a href="@Url.Action("QA", "Poslovi")" target="_blank"><b style="color: gray">QA</b></a></li>
+                            <li><a href="@Url.Action("Programiranje", "Poslovi")" target="_blank"><b style="color: gray">Programiranje</b></a></li>
+                            <li><a href="@Url.Action("Podrska", "Poslovi")" target="_blank"><b style="color: gray">Menadzment</b></a></li>
+                            <li><a href="@Url.Action("Sistem", "Poslovi")" target="_blank"><b style="color: gray">Sistemska administracija</b></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="@Url.Action("Kompanije", "Kompanija")"><b>Kompanije</b></a></li>
+
+                </ul>
+                @{ if (Session["idKorisnik"] != null)
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            <div style="color:grey;" class="navbar-brand" id="counter">
+                                @Html.ActionLink("Omiljeni oglasi", "Index", "OmiljeniOglasi")
+                            </div>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">User</b><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><b style="color:gray">User account</b></a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")"><b style="color:gray">Logout</b></a></li>
+                                </ul>
+                            </li>
+
+                        </ul>}
+                    else
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">Prijavi se</b><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("Login", "Account")"><b style="color:gray">Kao korisnik</b></a></li>
+                                    <li><a href="#"><b style="color:gray">Kao poslodavac</b></a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    }
+                }
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    @RenderBody()
+    <section class="footer">
+        <div class="social">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/?hl=en" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com/?lang=en" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <ul class="list">
+            <li>
+                <a href="@Url.Action("Index","Home")">Home</a>
+            </li>
+            <li>
+                <a href="@Url.Action("O_Nama","Footer")" target="_blank">O Nama</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Contact", "Footer")" @*target="_blank"*@>Kontakt</a>
+            </li>
+        </ul>
+
+        <p class="copyright">
+            2022 - Made in Serbia - Sadrzaj sajta je u vlasnistvu Link.JobPro. Zabranjeno je njegovo preuzimanje bez dozvole.
+        </p>
+    </section>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $.ajax({
+            async: true,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: FormData,
+            url: '/Shopping/Index',
+            success: function (data) {
+                if (data.success) {
+                    $("#cartItem").text("Cart(" + data.Counter + ")");
+                }
+            },
+            error: function() {
+                console.log("There is a problem!");
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+

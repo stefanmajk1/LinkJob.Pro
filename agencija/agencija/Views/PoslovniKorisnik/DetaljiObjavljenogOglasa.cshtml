@@ -1,0 +1,76 @@
+﻿@model agencija.Models.OglasVezaSaKljucevima
+@{
+    ViewBag.Title = "DetaljiObjavljenogOglasa";
+    agencija.Models.Agencija_Context agenic = new agencija.Models.Agencija_Context();
+    var broj = agenic.Kandidats.Where(x => x.idOglas == Model.idOglas).Count();
+}
+
+<link href="~/Fronte_End_Stana/KorisceniCSS/DetaljiOglasa.css" rel="stylesheet" />
+<link href="~/Fronte_End_Stana/KorisceniCSS/style.css" rel="stylesheet" />
+
+@*ViewBag.BrojKandidata = broj;*@
+<p class="glyphicon glyphicon-menu-right" style="margin-left: 20%; flex-wrap: wrap; color: darkblue;font-size:20px;display:flex;">
+    <a href="@Url.Action("ObjavljeniOglasi", "PoslovniKorisnik")" style="color: darkblue; display: flex;">
+        Objavljeni oglasi
+    </a>
+    <span class="glyphicon glyphicon-menu-right" style="color: darkblue; font-size: 20px;"> @Html.DisplayFor(model => model.naslov)</span>
+    <span class="glyphicon glyphicon-menu-right" style="color: darkblue; font-size: 20px;"> Ukupno kandidata: @broj</span>
+</p>
+@*<p class="glyphicon glyphicon-menu-right"> @Html.DisplayFor(model => model.naslov)</p>*@
+
+<div class="prva">
+    <div class="druga">
+        @if (Model.Kompanija.logo != null)
+        {
+            <h2 style="color:darkblue;">
+                @Html.DisplayFor(model => model.naslov)
+                <img src="~/Content/formalna.JPG" class="navbar-right" width="100" height="150" />
+            </h2>
+
+            <h2 font-size:20px;>@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+            <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+            var dedline = Model.istice.ToShortDateString();
+            <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+            <p>Broj poseta oglasa: @Model.poseta</p>
+            <h2><a href="@Model.Kompanija.sajt" target="_blank">Saznajte više o kompaniji</a></h2>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none;border:1px solid white; font-size:16px;font-weight:bold;color:black;" cols="20" rows="20" readonly>@Model.Kompanija.opis</textarea>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none; border: 1px solid white; font-size: 16px; font-weight: bold; color: black;" cols="20" rows="30">@Model.opis</textarea>
+            <hr />
+            <input type="submit" value="Pogledaj kandidate" onclick="PogledajKandidate(@Model.idOglas)" />
+        }
+        else
+        {
+            <h2 style="color:darkblue;">
+                @Html.DisplayFor(model => model.naslov)
+            </h2>
+
+            <h2 style="font-size:20px;color:dimgrey;">@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+            <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+            var dedline = Model.istice.ToShortDateString();
+            <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+            <h3><a href="@Model.Kompanija.sajt" target="_blank">Saznajte više o kompaniji</a></h3>
+            <p>Broj poseta oglasa: @Model.poseta</p>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none;border: none; font-size:16px;font-weight:bold;color:black;" placeholder="@Model.Kompanija.opis" cols="20" rows="20"></textarea>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none; border: none; font-size: 16px; font-weight: bold; color: black;" cols="20" rows="30" placeholder="@Model.opis"></textarea>
+            <hr />
+            <input type="submit" value="Pogledaj kandidate" onclick="PogledajKandidate(@Model.idOglas)" />
+        }
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    function PogledajKandidate(id) {
+        window.location.href = "/PoslovniKorisnik/Kandidati/?id=" + id;
+    };
+</script>
+

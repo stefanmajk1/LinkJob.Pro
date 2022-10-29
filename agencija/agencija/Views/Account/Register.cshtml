@@ -1,0 +1,119 @@
+﻿@model agencija.Models.Korisnik
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-default" id="navbar">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><b style="color:cornflowerblue">Link.JobPro</b> </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Poslovi</b><span class="caret"></span></a>
+                        <ul class="dropdown-menu" style="color:cornsilk">
+                            <li><a href="@Url.Action("Index", "Poslovi")" target="_blank"><b style="color:gray">Praksa</b></a></li>
+                            <li><a href="@Url.Action("QA", "Poslovi")" target="_blank"><b style="color: gray">QA</b></a></li>
+                            <li><a href="@Url.Action("Programiranje", "Poslovi")" target="_blank"><b style="color: gray">Programiranje</b></a></li>
+                            <li><a href="@Url.Action("Podrska", "Poslovi")" target="_blank"><b style="color: gray">Menadzment</b></a></li>
+                            <li><a href="@Url.Action("Sistem", "Poslovi")" target="_blank"><b style="color: gray">Sistemska administracija</b></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="@Url.Action("Kompanije", "Kompanija")"><b>Kompanije</b></a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">Prijavi se</b><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Login", "Account")"><b style="color:gray">Kao korisnik</b></a></li>
+                            <li><a href="#"><b style="color:gray">Kao poslodavac</b></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="center">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <h1>Signup</h1>
+            <div class="txt_field">
+                @Html.TextBoxFor(model => model.Ime, new { @class = "input", @type = "text", style = "border:none;" })
+                @Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Ime, new { @class = "label" })
+            </div>
+
+            <div class="txt_field">
+                @Html.TextBoxFor(model => model.Prezime, new { @class = "input", @type = "text", style = "border:none;" })
+                @Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Prezime, new { @class = "label" })
+
+            </div>
+
+            <div class="txt_field">
+                @Html.TextBoxFor(model => model.Email, new { @class = "input", @type = "email", style = "border:none;" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Email, new { @class = "label" })
+
+            </div>
+
+            <div class="txt_field">
+                @Html.TextBoxFor(model => model.Telefon, new { @class = "input", @type = "tel", style = "border:none;" })
+                @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Telefon, new { @class = "label" })
+            </div>
+
+            <div class="txt_field">
+                @Html.TextBoxFor(model => model.Username, new { @class = "input", @type = "text", style = "border:none;" })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Username, new { @class = "label" })
+            </div>
+
+            <div class="txt_field">
+                @Html.TextBoxFor(model => model.Sifra, new { @class = "input", @type = "password", style = "border:none;" })
+                @Html.ValidationMessageFor(model => model.Sifra, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Sifra, new { @class = "label" })
+
+            </div>
+            <input type="submit" value="Register" class="input" />
+            <div class="signup_link">
+                You already have an account? <a href="@Url.Action("Login", "Account")">Login</a>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-2">
+                    <label class="label-success">@ViewBag.Message</label>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</body>
+</html>

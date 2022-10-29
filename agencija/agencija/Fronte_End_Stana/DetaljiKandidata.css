@@ -1,0 +1,25 @@
+﻿.prva {
+    display: flex;
+    margin: 0px auto;
+    flex-wrap: wrap;
+    /*box-shadow: 3px 2px 20px 1px rgba(156,145,156,1);*/
+    width: 60%;
+    border-radius: 10px;
+    margin-bottom:10%;
+}
+
+.druga {
+    margin: 10%;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.treca {
+    width: auto;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+a{
+    margin-bottom:30%;
+}

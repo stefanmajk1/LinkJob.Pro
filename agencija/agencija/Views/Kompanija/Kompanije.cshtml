@@ -1,0 +1,66 @@
+﻿@model  IList<agencija.Models.Kompanija>
+
+@{
+    ViewBag.Title = "Kompanije";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/kompanija.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="body-content">
+    <div class="pretrazivacK">
+        <div class="hederK">
+            <h1 class="naslovK"> Poslova</h1>
+            <p id="naslov">Pronadjite posao ili zaposlite nekoga</p>
+        </div>
+    </div>@*Kraj Search olgasa*@
+    <div class="container">
+        <div class="row" id="inputiK">
+            @using (Html.BeginForm("Kompanije", "Kompanija", FormMethod.Get))
+            {
+                <div class="col-xs-9 col-md-9" id="ispisatiK">
+                    @Html.TextBox("Search_Data", "", new { @class = "form-control", @id = "inputK", placeholder = "Unesite naziv firme" })
+                </div>
+                <div class="col-xs-3 col-md-3">
+                    <input id="dugme" type="submit" class="btn btn-danger" value="Pretraga" />
+                </div>
+            }
+        </div>
+        <h1>Poslodavci</h1>
+
+
+        <div class="logo_slider">
+            @foreach (var item in Model)
+            {
+                if (item.logo != null)
+                {
+
+                    <div class="item" style="text-align:center; font-family:sans-serif;">
+                        <a href="@Url.Action("DetaljiKompanije","Kompanija", new { id = item.IdKompanija})">
+                            <img src="data:application/img;base64,@System.Convert.ToBase64String(item.logo)" type="application/img" />
+                        </a>
+                    </div>
+                }
+
+
+
+            }
+        </div>
+
+
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $('.logo_slider').slick({
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        dots: true,
+        arrows: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        infinite: true
+    });
+</script>

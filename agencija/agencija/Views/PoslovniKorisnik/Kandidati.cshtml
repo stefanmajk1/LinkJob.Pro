@@ -1,0 +1,71 @@
+﻿@*@model IEnumerable<agencija.Models.KorisnikKandidat>*@
+@model PagedList.IPagedList<agencija.Models.KorisnikKandidat>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Kandidati";
+}
+
+<link href="~/Fronte_End_Stana/KorisceniCSS/Oglasi.css" rel="stylesheet" />
+
+<p class="glyphicon glyphicon-menu-right" style="margin-left: 20%; flex-wrap: wrap; color: darkblue;font-size:20px;">
+    <a href="@Url.Action("ObjavljeniOglasi", "PoslovniKorisnik")" style="color:darkblue;">
+        Objavljeni oglasi
+    </a>
+</p>
+
+<div class="container body-content">
+    @if (Model.Count() == 0)
+    {
+        <p style="text-align:center;margin-top:20%;margin-bottom:30%;color: crimson;font-family:sans-serif;font-weight:bold; font-size:xx-large;">Trenutno nema kandidata za ovaj oglas! </p>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+
+
+
+
+            if (item.Slika != null)
+            {
+                <div class="detalji-kompanije">
+                    <div class="posao">
+                        <span style="float:right">
+                            <object data="data:application/img;base64,@System.Convert.ToBase64String(item.Slika)" type="application/img">
+                                <img src="data:application/img;base64,@System.Convert.ToBase64String(item.Slika)" type="application/img" width="100" height="120" id="img" />
+                            </object>
+                        </span>
+                        <h3 style="float:left;"><b>@item.Ime @item.Prezime </b></h3><br /><br /><br />
+
+                        <i class="glyphicon glyphicon-envelope"></i>
+                        <span style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Email)</span><br />
+                        <i class="glyphicon glyphicon-phone"></i>
+                        <span style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Telefon)</span><br />
+                        <i class="glyphicon glyphicon-hand-right">
+                        </i><a href="@Url.Action("DetaljiKandidata", "PoslovniKorisnik", new { id = item.IdKorisnik, idOglas = item.Kandidat.idOglas })" style="color:black; float:none">Detaljnije</a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="detalji-kompanije">
+                    <div class="posao">
+                        <h4 style="float:left;"><b>@item.Ime @item.Prezime </b></h4>
+                        <br /><br /><br />
+                        <i class="glyphicon glyphicon-envelope"></i>
+                        <span style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Email)</span><br />
+                        <i class="glyphicon glyphicon-phone"></i>
+                        <span style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Telefon)</span><br />
+                        <i class="glyphicon glyphicon-hand-right">
+                        </i><a href="@Url.Action("DetaljiKandidata", "PoslovniKorisnik", new { id = item.IdKorisnik, idOglas = item.Kandidat.idOglas })" style="color:black; float:none">Detaljnije</a>
+                    </div>
+                </div>
+            }
+            ViewBag.IdOglas = item.Kandidat.idOglas;
+
+        }
+
+        @Html.PagedListPager(Model, page => Url.Action("Kandidati", new { id = ViewBag.IdOglas, page, pageSize = Model.PageSize }))
+    }
+</div>

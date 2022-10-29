@@ -1,0 +1,60 @@
+﻿@model agencija.Models.Kompanija
+
+@{
+    ViewBag.Title = "DodajKompaniju";
+}
+
+@using (Html.BeginForm("DodajKompaniju1", "PoslovniKorisnik", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="margin:0px auto;margin-left:20%;">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label">Video</label>
+            <input type="text" name="video" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Sajt</label>
+            <input type="text" name="sajt" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Opis</label>
+            <input type="text" name="opis" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Naziv</label>
+            <input type="text" name="naziv" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Logo</label>
+            <input type="file" name="logo1" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Adresa</label>
+            <input type="text" name="adresa" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Telefon</label>
+            <input type="text" name="telefon" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Pib</label>
+            <input type="number" name="pib" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

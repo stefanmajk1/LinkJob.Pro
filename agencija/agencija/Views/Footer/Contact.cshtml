@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Contact</title>
+    <link href="~/Content/contact.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+    @using (Html.BeginForm("Contact", "Footer", FormMethod.Post))
+    {
+        <a class="btn btn-default" href="javascript:history.back()" id="backLink" style="border:none; font-size:larger;  margin:10px; padding:10px; font-family:sans-serif; text-decoration:none">
+            <b>Nazad</b>
+        </a>
+        <div class="container">
+            <div class="content-box">
+                <div class="left"></div>
+                <div class="right">
+                    <h2>Kontaktirajte nas</h2>
+                    <input id="ime" name="ime" type="text" class="field" placeholder="Unesite Vase ime" />
+                    <input id="email" name="email" type="email" class="field" placeholder="Unesite Vas email" />
+                    <textarea style="resize:none;" id="msg" name="poruka" class="field" placeholder="Kako Vam mozemo pomoci?"></textarea>
+                    <input class="submit" type="submit" value="Posalji" />
+                    @*<button class="btn" onclick="sendEmail()">Posalji</button>*@
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+
+</script>

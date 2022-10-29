@@ -1,0 +1,57 @@
+﻿.prva {
+    margin: 0px auto;
+    flex-wrap: wrap;
+    box-shadow: 3px 2px 20px 1px rgba(156,145,156,1);
+    width: 60%;
+    border-radius: 10px;
+}
+
+.druga {
+    margin: 10%;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 3px solid white;
+}
+
+h2 {
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+p {
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+a {
+    color: black;
+}
+
+input[type=submit] {
+    margin: 0px auto;
+    width: 30%;
+    margin-bottom: 5%;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid grey;
+    background-color: grey;
+    color: black;
+    padding: 2%;
+    font-weight: bold;
+}
+
+/*input:hover {
+    background-color: #4F4C4C;
+    color: white;
+}*/
+
+input {
+    text-align: center;
+}

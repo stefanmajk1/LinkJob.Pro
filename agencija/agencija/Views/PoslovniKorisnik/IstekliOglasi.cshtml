@@ -1,0 +1,77 @@
+﻿@model IEnumerable<agencija.Models.OglasVezaSaKljucevima>
+
+@{
+    ViewBag.Title = "IstekliOglasi";
+}
+
+<link href="~/Fronte_End_Stana/KorisceniCSS/Oglasi.css" rel="stylesheet" />
+
+<div class="container body-content">
+
+    @if (Model.Count() == 0)
+    {
+        <p style="text-align:center;margin-top:20%;margin-bottom:30%;color: crimson;font-family:sans-serif;font-weight:bold; font-size:xx-large;">Trenutno nema oglasa za brisanje!</p>
+    }
+    else
+    {
+
+        foreach (var item in Model)
+        {
+            var dedline = item.istice.ToShortDateString();
+            if (item.Kompanija.logo != null)
+            {
+
+                <div class="detalji-kompanije">
+                    <div class="posao">
+                        <h4 style="float:left;"><b>@item.naslov</b></h4><br /><br />
+                        <p><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>
+                        <span><img src="~/Content/formalna.JPG" class="navbar-right" width="100" height="150" /></span>
+                        <i class="glyphicon glyphicon-map-marker"></i>
+                        <span>@Html.DisplayFor(modelItem => item.Mesto.naziv)</span><br />
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</p>
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</p>
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <span>@dedline</span>
+                        <button id="@item.idOglas" class="btn btn-primary " style="float:right;">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="detalji-kompanije">
+                    <div class="posao">
+                        <h4 style="float:left;"><b>@item.naslov</b></h4><br /><br />
+                        <p><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>
+                        <button id="@item.idOglas" class="btn btn-primary" style="float:right;background-color:white;width:10%;">
+                            <span class="glyphicon glyphicon-trash" style="margin:0px auto;" aria-hidden="true"></span>
+                        </button>
+                        <i class="glyphicon glyphicon-map-marker"></i>
+                        <span>@Html.DisplayFor(modelItem => item.Mesto.naziv)</span><br />
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</p>
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</p>
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <span>@dedline</span>
+                    </div>
+                </div>
+            }
+
+        }
+    }
+
+
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    $(".btn").click(function () {
+        var id = this.id;
+        if (confirm("Da li ste sigurni da želite da obrišete oglas?")) {
+            var request = $.post("/PoslovniKorisnik/BrisanjeIsteklogOglasa/?id=" + id + "");
+            request.done(function (rez) {
+                window.location.href = "/PoslovniKorisnik/IstekliOglasi/";
+            });
+        }
+    });
+</script>

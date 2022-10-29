@@ -1,0 +1,56 @@
+﻿@model agencija.Models.Kompanija
+
+@{
+    ViewBag.Title = "ProfilKompanije";
+}
+
+
+<link href="~/Fronte_End_Stana/KorisceniCSS/DetaljiOglasa.css" rel="stylesheet" />
+<link href="~/Fronte_End_Stana/KorisceniCSS/style.css" rel="stylesheet" />
+
+
+
+@if (Model.logo == null)
+{
+    <div class="prva" style="background-color: whitesmoke; -webkit-box-shadow: 0px 0px 0px 8px #000000, 0px 0px 0px 16px #4B4C4B, 0px 0px 0px 24px #828482, 0px 0px 0px 31px #B2B5B2, 0px 0px 0px 39px #DADDDA, 3px -1px 28px 10px rgba(0,0,0,0); box-shadow: 0px 0px 0px 8px #000000, 0px 0px 0px 16px #4B4C4B, 0px 0px 0px 24px #828482, 0px 0px 0px 31px #B2B5B2, 0px 0px 0px 39px #DADDDA, 3px -1px 28px 10px rgba(0,0,0,0); ">
+        <div class="druga" style="background-color: whitesmoke;">
+            <h2 style="color:dimgray;">
+                @Html.DisplayFor(model => model.naziv)
+                <img src="~/Slike/sirmia.JPG" class="navbar-right" width="190" height="50" />
+            </h2>
+
+            <h5><a href="@Model.sajt" target="_blank">Saznajte više o kompaniji</a></h5>
+            <h5 class="glyphicon glyphicon-map-marker"> @Model.adresa</h5><br />
+            <h5 class="glyphicon glyphicon-earphone"> @Model.telefon</h5><br />
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none; border: 1px solid whitesmoke; font-size: 16px; font-weight: bold; color: black; background-color: whitesmoke; " cols="20" rows="20" readonly>@Model.opis</textarea>
+            <hr />
+            <iframe src="@Model.video" style="flex-wrap:wrap;width:80%;margin-left:10%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <hr />
+            <input type="submit" value="Izmenite podatke" onclick="PogledajKandidate(@Model.IdKompanija)" />
+        </div>
+
+    </div>
+
+}
+else
+{
+    @*<h2 style="color:darkblue;">
+            @Html.DisplayFor(model => model.naziv)
+        </h2>
+
+        <h2 style="font-size:20px;color:dimgrey;">@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+        <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+        var dedline = Model.istice.ToShortDateString();
+        <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+        <h3><a href="@Model.Kompanija.sajt" target="_blank">Saznajte više o kompaniji</a></h3>
+        <p>Broj poseta oglasa: @Model.poseta</p>
+        <hr />
+        <textarea style="width: 100%; max-width: none; resize: none;border: none; font-size:16px;font-weight:bold;color:black;" placeholder="@Model.Kompanija.opis" cols="20" rows="20"></textarea>
+        <hr />
+        <textarea style="width: 100%; max-width: none; resize: none; border: none; font-size: 16px; font-weight: bold; color: black;" cols="20" rows="30" placeholder="@Model.opis"></textarea>
+        <hr />
+        <input type="submit" value="Pogledaj kandidate" onclick="PogledajKandidate(@Model.idOglas)" />*@
+}

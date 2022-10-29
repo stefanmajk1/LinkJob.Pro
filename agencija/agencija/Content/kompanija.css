@@ -1,0 +1,69 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.pretrazivacK {
+    background-image: url('../Slike/kopanija_slika.jpg');
+    border: 2px solid;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    height: 190px;
+}
+
+.hederK {
+    bottom: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.naslovK:before {
+    color: #f53939;
+    content: "3,000+"
+}
+
+.naslovK {
+    color: floralwhite;
+}
+
+#inputiK {
+    background-color: hsl(70 0% 74%);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 39px;
+}
+
+#inputK {
+    border: none;
+    border-radius: 9px;
+}
+
+#ispisatiK {
+}
+
+#body {
+    font-family: 'Barlow', sans-serif;
+}
+
+    #body img {
+        width: 244px;
+        height: 140px;
+    }
+
+.container h1 {
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+    margin-bottom: 60px;
+}
+
+    .container h1:after {
+        content: '';
+        position: absolute;
+        width: 100px;
+        height: 4px;
+        background-color: #ff8159;
+        bottom: -20px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }

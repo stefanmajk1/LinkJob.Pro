@@ -1,0 +1,49 @@
+﻿@model IEnumerable<agencija.Models.OglasVezaSaKljucevima>
+
+@{
+    ViewBag.Title = "ObjavljeniOglasi";
+}
+<link href="~/Fronte_End_Stana/KorisceniCSS/Oglasi.css" rel="stylesheet" />
+
+<div class="container body-content">
+    @if (Model.Count() == 0)
+    {
+        <p style="text-align:center;margin-top:20%;margin-bottom:30%;color: crimson;font-family:sans-serif;font-weight:bold; font-size:xx-large;">Trenutno nema objavljenih oglasa </p>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <div class="detalji-kompanije">
+                <div class="posao">
+                    <h4 style="float:left;"><a href="@Url.Action("DetaljiObjavljenogOglasa", "PoslovniKorisnik", new { id = item.idOglas })"><b>@item.naslov</b></a></h4><br /><br />
+                    <p><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>
+                    @if (item.Kompanija.logo != null)
+                    {
+                        <span><img src="~/Content/formalna.JPG" class="navbar-right" width="100" height="150" /></span>
+                        <i class="glyphicon glyphicon-map-marker"></i>
+                        <span>@Html.DisplayFor(modelItem => item.Mesto.naziv)</span><br />
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</p>
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</p>
+                        var dedline = item.istice.ToShortDateString();
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <span> @dedline</span>
+                    }
+                    else
+                    {
+                        <i class="glyphicon glyphicon-map-marker"></i>
+                        <span>@Html.DisplayFor(modelItem => item.Mesto.naziv)</span><br />
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</p>
+                        <p style="font-weight:bold;">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</p>
+                        var dedline = item.istice.ToShortDateString();
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <span> @dedline</span>
+                    }
+                </div>
+
+            </div>
+
+        }
+
+    }
+</div>

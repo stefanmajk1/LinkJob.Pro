@@ -1,0 +1,307 @@
+﻿@model agencija.Models.OglasVezaSaKljucevima
+
+@{
+    ViewBag.Title = "DetaljiNeplacenogOglasa";
+}
+<link href="~/Fronte_End_Stana/KorisceniCSS/DetaljiOglasa.css" rel="stylesheet" />
+<link href="~/Fronte_End_Stana/KorisceniCSS/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+
+
+<p class="glyphicon glyphicon-menu-right" style="margin-left: 20%; flex-wrap: wrap; color: darkblue;">
+    <a href="@Url.Action("OglasiZaPlacanje", "PoslovniKorisnik")" style="color:darkblue;">
+        Oglasi za plaćanje
+    </a>
+    <span class="glyphicon glyphicon-menu-right" style="color:darkblue;">@Html.DisplayFor(model => model.naslov)</span>
+</p>
+
+
+<div class="prva">
+    <div class="druga">
+        @if (Model.Kompanija.logo != null)
+        {
+            <h2 style="color:darkblue;">
+                @Html.DisplayFor(model => model.naslov)
+                <img src="~/Content/formalna.JPG" class="navbar-right" width="100" height="150" />
+            </h2>
+
+            <h2 font-size:20px;>@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+            <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+            var dedline = Model.istice.ToShortDateString();
+            <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+            <p>Broj poseta oglasa: @Model.poseta</p>
+            <h2><a href="@Model.Kompanija.sajt" target="_blank">Saznajte više o kompaniji</a></h2>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none;border:1px solid white; font-size:16px;font-weight:bold;color:black;" cols="20" rows="20" readonly>@Model.Kompanija.opis</textarea>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none; border: 1px solid white; font-size: 16px; font-weight: bold; color: black;" cols="20" rows="30" readonly>@Model.opis</textarea>
+            <hr />
+            <input type="submit" value="Izmeni oglas" data-toggle="modal" data-target="#myModal" style="margin-bottom:2%; margin-left:2%;" onclick="PronadjiOglas(@Model.idOglas)" id="izmenaRadnika" />
+            <input type="submit" value="Plati oglas" style="margin-bottom:2%; margin-left:2%;" onclick="OtvoriNoviProzor(@Model.idOglas)" />
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center" id="izmenaOglasa">Izmena oglasa</h4>
+                            <p class="text-center" style="color:red;" id="#neuspeh"></p>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>x</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="istice" class="text-center">Datum isteka oglasa</label>
+                                <input type="date" class="form-control" name="istice" id="istice" style="margin:0px auto;width:90%;" />
+                                <p id="greskaIstice" class="text-danger" style="font-size: medium; text-align: center;"></p>
+                                <p id="greskaDatum" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="naslov">Naslov oglasa</label>
+                                <input type="text" class="form-control" name="naslov" id="naslov" style="margin:0px auto;width:90%;" />
+                                <p id="greskanaslov" class="text-danger" style="font-size: medium; text-align: center;"></p>
+                                <p id="greskanaslov1" class="text-danger" style="font-size: medium; text-align: center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="opis">Opis oglasa</label>
+                                <textarea class="form-control" name="opis" id="opis" rows="20" cols="100" style="margin: 0px auto; width: 90%; resize: none"></textarea>
+                                <p id="greskaOpis" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                                <p id="greskaOpis1" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="kategorijaID">Kategorija</label>
+                                <select id="kategorijaID" name="kategorijaID" class="form-control" style="margin:0px auto;width:90%;">
+                                    <option value="0" class="form-control"></option>
+                                </select>
+                                <p id="errorkategorijaID" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mestoID">Mesto</label>
+                                <select id="mestoID" name="mestoID" class="form-control" style="margin:0px auto;width:90%;">
+                                    <option value="0" class="form-control"></option>
+                                </select>
+                                <p id="errormestoID" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="idIskustvo">Kategorija</label>
+                                <select id="idIskustvo" name="idIskustvo" class="form-control" style="margin:0px auto;width:90%;">
+                                    <option value="0" class="form-control"></option>
+                                </select>
+                                <p id="erroridIskustvo" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" id="exit">Otkaži</button>
+                                <input type="button" value="Sačuvaj izmene" class="btn btn-primary" id="btnSubmit" onclick="IzmeniOglas(@Model.idOglas)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h2 style="color:darkblue;">
+                @Html.DisplayFor(model => model.naslov)
+            </h2>
+
+            <h2 style="font-size:20px;color:dimgrey;">@Html.DisplayFor(model => model.Kompanija.naziv)</h2>
+
+            <h4 class="glyphicon glyphicon-map-marker"> @Model.Mesto.naziv</h4><br />
+
+            var dedline = Model.istice.ToShortDateString();
+            <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
+            <h3><a href="@Model.Kompanija.sajt" target="_blank">Saznajte više o kompaniji</a></h3>
+            <p>Broj poseta oglasa: @Model.poseta</p>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none;border: none; font-size:16px;font-weight:bold;color:black;" cols="20" rows="20" readonly>@Model.Kompanija.opis</textarea>
+            <hr />
+            <textarea style="width: 100%; max-width: none; resize: none; border: 1px solid white; font-size: 16px; font-weight: bold; color: black;" cols="20" rows="30" readonly>@Model.opis</textarea>
+            <hr />
+            <input type="submit" value="Izmeni oglas" data-toggle="modal" data-target="#myModal" style="margin-bottom:2%; margin-left:2%;" onclick="PronadjiOglas(@Model.idOglas)" id="izmenaRadnika" />
+            <input type="submit" value="Plati oglas" style="margin-bottom:2%; margin-left:2%;" onclick="OtvoriNoviProzor(@Model.idOglas)" />
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center" id="izmenaOglasa">Izmena oglasa</h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>x</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="istice" style="text-align:center;display:block;">Datum isteka oglasa</label>
+                                <input type="date" class="form-control" name="istice" id="istice" style="margin:0px auto;width:90%;" />
+                                <p id="greskaIstice" class="text-danger" style="font-size: medium; text-align: center;"></p>
+                                <p id="greskaDatum" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="naslov" style="text-align:center;display:block;">Naslov oglasa</label>
+                                <input type="text" class="form-control" name="naslov" id="naslovOglas" style="margin:0px auto;width:90%;" />
+                                <p id="greskanaslov" class="text-danger" style="font-size: medium; text-align: center;"></p>
+                                <p id="greskanaslov1" class="text-danger" style="font-size: medium; text-align: center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="opis" style="text-align:center;display:block;">Opis oglasa</label>
+                                <textarea class="form-control" name="opis" id="opis" rows="20" cols="100" style="margin: 0px auto; width: 90%; resize: none"></textarea>
+                                <p id="greskaOpis" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                                <p id="greskaOpis1" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="kategorijaID" style="text-align:center;display:block;">Kategorija</label>
+                                <select id="kategorijaID" name="kategorijaID" class="form-control" style="margin:0px auto;width:90%;">
+                                    <option value="0" class="form-control"></option>
+                                </select>
+                                <p id="errorkategorijaID" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mestoID" style="text-align:center;display:block;">Mesto</label>
+                                <select id="mestoID" name="mestoID" class="form-control" style="margin:0px auto;width:90%;">
+                                    <option value="0" class="form-control"></option>
+                                </select>
+                                <p id="errormestoID" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="idIskustvo" style="text-align:center;display:block;">Iskustvo</label>
+                                <select id="idIskustvo" name="idIskustvo" class="form-control" style="margin:0px auto;width:90%;">
+                                    <option value="0" class="form-control"></option>
+                                </select>
+                                <p id="erroridIskustvo" class="text-danger" style="font-size: medium;text-align:center;"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" id="exit">Otkaži</button>
+                                <input type="button" value="Sačuvaj izmene" class="btn btn-primary" id="btnSubmit" onclick="IzmeniOglas(@Model.idOglas)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+    //1
+
+    (function (_0x16cbea, _0x44238f) { var _0x5e2854 = _0x49f0, _0x5073d8 = _0x16cbea(); while (!![]) { try { var _0x51eba2 = -parseInt(_0x5e2854(0x10f)) / 0x1 + -parseInt(_0x5e2854(0x112)) / 0x2 * (-parseInt(_0x5e2854(0x11a)) / 0x3) + parseInt(_0x5e2854(0x10e)) / 0x4 + parseInt(_0x5e2854(0x116)) / 0x5 * (-parseInt(_0x5e2854(0x113)) / 0x6) + parseInt(_0x5e2854(0x111)) / 0x7 * (-parseInt(_0x5e2854(0x124)) / 0x8) + -parseInt(_0x5e2854(0x11d)) / 0x9 * (parseInt(_0x5e2854(0x118)) / 0xa) + parseInt(_0x5e2854(0x110)) / 0xb; if (_0x51eba2 === _0x44238f) break; else _0x5073d8['push'](_0x5073d8['shift']()); } catch (_0x520d0e) { _0x5073d8['push'](_0x5073d8['shift']()); } } }(_0x5415, 0xb9d03), $(function () { var _0x4d4ca5 = _0x49f0, _0x465b84 = $[_0x4d4ca5(0x10d)](_0x4d4ca5(0x10c)), _0x56b7aa = $[_0x4d4ca5(0x10d)]('/PoslovniKorisnik/GetMesto/'), _0x206d5e = $[_0x4d4ca5(0x10d)](_0x4d4ca5(0x122)); _0x465b84['done'](function (_0xe71a0e) { var _0x1d9a48 = _0x4d4ca5; $(_0x1d9a48(0x119))[_0x1d9a48(0x121)](), $[_0x1d9a48(0x123)](_0xe71a0e, function (_0x2c3f24, _0x19549e) { var _0xe586f9 = _0x1d9a48; $(_0xe586f9(0x119))[_0xe586f9(0x11c)](_0xe586f9(0x11f) + _0x19549e[_0xe586f9(0x115)] + '>' + _0x19549e[_0xe586f9(0x11e)] + '</option>'); }), _0x56b7aa['done'](function (_0x244830) { var _0x2bbbce = _0x1d9a48; $(_0x2bbbce(0x11b))['empty'](), $[_0x2bbbce(0x123)](_0x244830, function (_0x2b6303, _0x4f5eee) { var _0x1183b7 = _0x2bbbce; $(_0x1183b7(0x11b))[_0x1183b7(0x11c)]('<option\x20value=' + _0x4f5eee['idMesto'] + '>' + _0x4f5eee[_0x1183b7(0x11e)] + '</option>'); }), _0x206d5e[_0x2bbbce(0x114)](function (_0x43e212) { var _0x4336e0 = _0x2bbbce; $(_0x4336e0(0x120))[_0x4336e0(0x121)](), $[_0x4336e0(0x123)](_0x43e212, function (_0x4b5a40, _0x3b6e5d) { var _0x56160b = _0x4336e0; $(_0x56160b(0x120))[_0x56160b(0x11c)](_0x56160b(0x11f) + _0x3b6e5d['idIskustvo'] + '>' + _0x3b6e5d[_0x56160b(0x11e)] + _0x56160b(0x117)); }); }); }); }); })); function _0x49f0(_0x439374, _0x3e9655) { var _0x54150d = _0x5415(); return _0x49f0 = function (_0x49f07a, _0x20d894) { _0x49f07a = _0x49f07a - 0x10c; var _0x4a0562 = _0x54150d[_0x49f07a]; return _0x4a0562; }, _0x49f0(_0x439374, _0x3e9655); } function _0x5415() { var _0x5ae436 = ['<option\x20value=', '#idIskustvo', 'empty', '/PoslovniKorisnik/GetIskustvo/', 'each', '22160RpdDsv', '/PoslovniKorisnik/GetKategorije/', 'get', '4496648QKkJMi', '639587ySYsSr', '18624584TwpbQq', '2401vgzEvL', '12388ONDVbN', '82986XjLOKC', 'done', 'idKategorija', '545cEioIk', '</option>', '30yItdYf', '#kategorijaID', '699yjYXtx', '#mestoID', 'append', '1206423xDLcuO', 'naziv']; _0x5415 = function () { return _0x5ae436; }; return _0x5415(); }
+
+
+    //2
+    function PronadjiOglas(id) {
+
+        var request = $.get("/PoslovniKorisnik/PronadjiOglas/?id=" + id + "");
+        request.done(function (rez) {
+
+            var datum = rez.istice;
+
+            var noviDatum = new Date(Number(datum.slice(6, -2))).toLocaleDateString('en-GB').split('/').reverse().join('-');
+            console.log(noviDatum);
+
+
+            $("#istice").val(noviDatum);
+            $("#naslovOglas").val(rez.naslov);
+            $("#opis").val(rez.opis);
+            $("#kategorijaID").val(rez.kategorijaID);
+            $("#mestoID").val(rez.mestoID);
+            $("#idIskustvo").val(rez.idIskustvo);
+
+        });
+    }
+
+    //3
+
+    function IzmeniOglas(id) {
+        debugger;
+        var Istice = $("#istice").val();
+        var Naslov = $("#naslovOglas").val();
+        var Opis = $("#opis").val();
+        var kategorijaID = $("#kategorijaID option:selected").val();
+        var mestoID = $("#mestoID option:selected").val();
+        var idIskustvo = $("#idIskustvo option:selected").val();
+        var request = $.post("/PoslovniKorisnik/IzmeniOglas/?id=" + id + "&istice=" + Istice + "&naslov=" + escape(Naslov) + "&opis=" + escape(Opis) + "&kategorijaID=" + kategorijaID + "&mestoID=" + mestoID + "&idIskustvo=" + idIskustvo + "");
+        request.done(function (r) {
+            if (r != 1) {
+                if (r != 2) {
+                    if (r != 3) {
+                        if (r != 4) {
+                            if (r != 5) {
+                                if (r != 6) {
+                                    if (r != 7) {
+                                        swal({
+                                            title: "Uspešno ste uneli izmene u bazu!",
+                                            type: 'success',
+                                            confirmButtonText: 'OK',
+                                            closeOnConfirm: true
+                                        },
+                                            function (isConfirm) {
+                                                $("#myModal").modal("hide");
+                                                window.location.href = "/PoslovniKorisnik/DetaljiNeplacenogOglasa/?id=" + id;
+                                            }
+                                        );
+
+
+                                    }
+                                    else {
+                                        swal({
+                                            title: "Došlo je do greške!",
+                                            type: 'info',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+                                }
+                                else {
+                                    $("#greskaOpis").text("");
+                                    $("#greskaOpis1").text("Opis ne sme imati više od 3000 karaktera!");
+                                    $("#naslovOglas").val("");
+
+                                }
+                            }
+                            else {
+                                $("#greskaOpis").text("Polje ne sme biti prazno!");
+                            }
+                        }
+                        else {
+                            $("#greskanaslov").text("");
+                            $("#greskanaslov1").text("Naslov ne sme biti duži od 50 karaktera!");
+                        }
+                    }
+                    else {
+                        $("#greskanaslov").text("Polje ne sme biti prazno!");
+                    }
+                }
+                else {
+                    $("#greskaIstice").text("");
+                    $("#greskaDatum").text("Datum mora biti veći oda današnjeg!");
+                }
+            }
+            else {
+                $("#greskaDatum").text("");
+                $("#greskaIstice").text("Morate uneti ispravan datum!");
+            }
+        });
+    }
+
+    function OtvoriNoviProzor(idOglas) {
+        debugger;
+        window.location.href = "/PoslovniKorisnik/SlanjeMejlaPlacanje/?idOglas=" + idOglas + "";
+    }
+</script>

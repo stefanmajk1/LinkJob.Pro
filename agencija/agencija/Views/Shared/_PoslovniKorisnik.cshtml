@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/Site.css")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand"><b href="#" style="color:cornflowerblue">Link.JobPro</b></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pregled oglasa<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+
+                            <li>@Html.ActionLink("Objavljeni oglasi", "ObjavljeniOglasi", "PoslovniKorisnik")</li>
+                            <li>@Html.ActionLink("Oglasi na cekanju za placanje", "OglasiZaPLacanje", "PoslovniKorisnik")</li>
+                            <li>@Html.ActionLink("Istekli oglasi", "IstekliOglasi", "PoslovniKorisnik")</li>
+
+
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Objavite oglas", "UnosNovogOglasa", "PoslovniKorisnik")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">Prijavi se</b><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><b style="color:gray">Kao korisnik</b></a></li>
+                            <li><a href="#"><b style="color:gray">Kao poslodavac</b></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav  navbar-right">
+                    <li>@Html.ActionLink("Profil kompanije", "ProfilKompanije", "PoslovniKorisnik")</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @*<div class="container body-content">*@
+    @RenderBody()
+    <hr />
+
+    @*</div>*@
+
+    <section class="footer">
+        <div class="social">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/?hl=en" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com/?lang=en" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+        <ul class="list">
+            <li>
+                <a href="@Url.Action("ObjavljeniOglasi","PoslovniKorisnik")">Home</a>
+            </li>
+            <li>
+                <a href="@Url.Action("O_Nama","Footer")" target="_blank">O Nama</a>
+            </li>
+            <li>
+                <a href="" target="_blank">Kontakt</a>
+            </li>
+        </ul>
+
+        <p class="copyright">
+            2022 - Made in Serbia - Sadrzaj sajta je u vlasnistvu Link.JobPro. Zabranjeno je njegovo preuzimanje bez dozvole.
+        </p>
+    </section>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

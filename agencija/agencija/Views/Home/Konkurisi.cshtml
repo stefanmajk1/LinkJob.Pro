@@ -1,0 +1,61 @@
+﻿@model agencija.Models.Kandidat
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Konkurisi</title>
+</head>
+<body>
+    @using (Html.BeginForm("Test", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+       @Html.AntiForgeryToken()
+
+        <h1>Konkurisi se, sifra oglasa je: @ViewBag.idOglas, i sifra korisnika koj se konkurise je: @ViewBag.idkorisnik</h1>
+        <hr />
+        <div>
+            <table class="table-condensed">
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.idOglas) &nbsp;&nbsp;
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.idOglas)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.idUser) &nbsp;&nbsp;
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.idUser)
+)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.idOglas) &nbsp;&nbsp;
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.idOglas)
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        
+
+        }
+    <script type="text/javascript">
+        function DownloadFile(fileId) {
+            $("#hfFileId").val(fileId);
+            $("#btnDownload")[0].click();
+        };
+    </script>
+</body>
+</html>
