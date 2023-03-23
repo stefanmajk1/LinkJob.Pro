@@ -1,0 +1,28 @@
+﻿@model IEnumerable<agencija.Models.Kandidat>
+@{
+    ViewBag.Title = "KandidatiOglasa";
+    Layout = "~/Views/Shared/_PoslovniKorisnik.cshtml";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>popratniDokument</th>
+            <th>cv</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kandidat in Model)
+        {
+            <tr>
+                <td>@kandidat.Korisnik.Ime</td>
+                <td>@kandidat.Korisnik.Prezime</td>
+                <td><a href="@Url.Action("DownloadPopratniDokument", new { id = kandidat.idKandidat })">@Path.GetFileName(kandidat.propratniDokument)</a></td>
+                <td><a href="@Url.Action("DownloadCv", new { id = kandidat.idKandidat })">@Path.GetFileName(kandidat.cv)</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

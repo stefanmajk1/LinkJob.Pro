@@ -12,50 +12,39 @@
     <title>Register</title>
     <link href="~/Content/login.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#register-form').submit(function (e) {
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = '@Url.Action("Login", "Account")';
+                        } else {
+                            $('#error-message').text(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while processing your request.");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-    <nav class="navbar navbar-default" id="navbar">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><b style="color:cornflowerblue">Link.JobPro</b> </a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Poslovi</b><span class="caret"></span></a>
-                        <ul class="dropdown-menu" style="color:cornsilk">
-                            <li><a href="@Url.Action("Index", "Poslovi")" target="_blank"><b style="color:gray">Praksa</b></a></li>
-                            <li><a href="@Url.Action("QA", "Poslovi")" target="_blank"><b style="color: gray">QA</b></a></li>
-                            <li><a href="@Url.Action("Programiranje", "Poslovi")" target="_blank"><b style="color: gray">Programiranje</b></a></li>
-                            <li><a href="@Url.Action("Podrska", "Poslovi")" target="_blank"><b style="color: gray">Menadzment</b></a></li>
-                            <li><a href="@Url.Action("Sistem", "Poslovi")" target="_blank"><b style="color: gray">Sistemska administracija</b></a></li>
-                        </ul>
-                    </li>
-                    <li><a href="@Url.Action("Kompanije", "Kompanija")"><b>Kompanije</b></a></li>
-
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">Prijavi se</b><span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("Login", "Account")"><b style="color:gray">Kao korisnik</b></a></li>
-                            <li><a href="#"><b style="color:gray">Kao poslodavac</b></a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"].ToString()</div>
+    }
     <div class="center">
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form" }))
         {
@@ -63,39 +52,39 @@
 
             <h1>Signup</h1>
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Ime, new { @class = "input", @type = "text", style = "border:none;" })
+                @Html.TextBoxFor(model => model.Ime, new { @class = "input", @type = "text", style = "border:none;", required = "required" })
                 @Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Ime, new { @class = "label" })
             </div>
 
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Prezime, new { @class = "input", @type = "text", style = "border:none;" })
+                @Html.TextBoxFor(model => model.Prezime, new { @class = "input", @type = "text", style = "border:none;", required = "required" })
                 @Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Prezime, new { @class = "label" })
 
             </div>
 
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Email, new { @class = "input", @type = "email", style = "border:none;" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "input", @type = "email", style = "border:none;", required = "required" })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Email, new { @class = "label" })
 
             </div>
 
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Telefon, new { @class = "input", @type = "tel", style = "border:none;" })
+                @Html.TextBoxFor(model => model.Telefon, new { @class = "input", @type = "tel", style = "border:none;", required = "required" })
                 @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Telefon, new { @class = "label" })
             </div>
 
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Username, new { @class = "input", @type = "text", style = "border:none;" })
+                @Html.TextBoxFor(model => model.Username, new { @class = "input", @type = "text", style = "border:none;", required = "required" })
                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Username, new { @class = "label" })
             </div>
 
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Sifra, new { @class = "input", @type = "password", style = "border:none;" })
+                @Html.TextBoxFor(model => model.Sifra, new { @class = "input", @type = "password", style = "border:none;", required = "required" })
                 @Html.ValidationMessageFor(model => model.Sifra, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Sifra, new { @class = "label" })
 
@@ -106,14 +95,20 @@
             </div>
 
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-2">
-                    <label class="label-success">@ViewBag.Message</label>
-                </div>
+            @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-2">
+                        <label class="label-success">@ViewBag.Message</label>
+                    </div>
 
-            </div>
+                </div>*@
         }
 
     </div>
+    <script>
+    var message = '@TempData["Message"]';
+    if (message != '') {
+        alert(message);
+    }
+    </script>
 </body>
 </html>

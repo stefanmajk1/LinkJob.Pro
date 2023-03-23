@@ -5,7 +5,6 @@
 
 <link href="~/Content/style.css" rel="stylesheet" />
 <link href="~/Content/detaljiKompanija.css" rel="stylesheet" />
-
 @foreach (var item in Model)
 {
     <div class="gornji_deo">
@@ -46,7 +45,7 @@
                     </div>
                 </div>
                 <div style="float:right;" class="image-section">
-                    <img style="float:right; margin-top:150px;" src="data:application/img;base64,@System.Convert.ToBase64String(item.logo)" type="application/img" />
+                    <img style="float: right; margin-top: 90px; width: 300px; height: auto; border-radius: 0;" src="data:application/img;base64,@System.Convert.ToBase64String(item.logo)" type="application/img" />
                 </div>
             </div>
         </div>

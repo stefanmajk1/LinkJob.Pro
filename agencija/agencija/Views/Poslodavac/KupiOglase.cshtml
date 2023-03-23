@@ -1,0 +1,41 @@
+﻿@model IEnumerable<agencija.Models.CenovnikOglasa>
+@{
+    ViewBag.Title = "KupiOglase";
+    Layout = "~/Views/Shared/_PoslovniKorisnik.cshtml";
+}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+<link href="~/Content/CenaOglasa/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="~/Content/CenaOglasa/css/hero-slider-style.css" rel="stylesheet" />
+<link href="~/Content/CenaOglasa/css/templatemo-style.css" rel="stylesheet" />
+<h1 style="text-align:center; margin:55px 0;">Kupi Oglase</h1>
+<div class="container-fluid js-tm-page-content tm-page-pad" data-page-no="1" style="margin:auto;">
+    <div class="row">
+        <div class="tm-3-col-container">
+            @foreach (var paket in Model)
+            {
+                using (Html.BeginForm("KupiOglase", "Poslodavac", FormMethod.Post))
+                {
+                    @*<p>@paket.paket</p>
+                        <p>Broj oglasa: @paket.brojOglasa</p>
+                        <p>Cena: @paket.cena</p>
+                        <input type="hidden" name="id" value="@paket.idCenovnik"/>
+                        <button type="submit">Kupi</button>*@
+
+
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 tm-3-col-textbox">
+                        <div class="text-xs-left tm-textbox tm-textbox-padding tm-bg-white-translucent tm-3-col-textbox-inner">
+                            <h2 class="tm-text-title">@paket.paket</h2>
+                            <p class="tm-text">Broj oglasa: @paket.brojOglasa </p>
+                            <p class="tm-text">Cena: @paket.cena </p>
+                            <input type="hidden" name="id" value="@paket.idCenovnik" />
+                            <button type="submit">Kupi</button>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+</div>
+

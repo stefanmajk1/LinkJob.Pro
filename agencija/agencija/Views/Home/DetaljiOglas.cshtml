@@ -6,7 +6,7 @@
 <link href="~/Fronte_End_Stana/KorisceniCSS/DetaljiOglasa.css" rel="stylesheet" />
 <link href="~/Content/style.css" rel="stylesheet" />
 <p class="glyphicon glyphicon-menu-left" style="margin-left:5%; flex-wrap:wrap;">
-    <a href="javascript:history.back()" id="backLink">
+    <a onclick="goBack()" id="backLink">
         Nazad
     </a>
 </p>
@@ -27,12 +27,17 @@
             var dedline = Model.istice.ToShortDateString();
             <h4 class="glyphicon glyphicon-calendar"> @dedline</h4>
             <hr />
-            <p>@Model.Kompanija.opis</p>
-            <hr />
-            <textarea style="border: none; font-size: 20px; font-family: sans-serif; width:756px; height:400px; max-width:none; overflow:hidden;" readonly>@Model.opis</textarea>
+            <textarea style="border: none; resize: none; font-size: 20px; font-family: sans-serif; width: 756px; height: 400px; max-width: none; overflow-y: auto; overflow: scroll;; " readonly>@Model.opis</textarea>
             <hr />
             <div id="PlaceHolderHere"></div>
-            <a id="oglasid" class="btn btn-primary" href="@Url.Action("Konkurisi","Home", new { id = Model.idOglas})">Konkurisi</a>
+            if (Session["idKorisnik"] != null)
+            {
+                <a id="oglasid" class="btn btn-primary" href="@Url.Action("Konkurisi","Home", new { id = Model.idOglas})">Konkurisi</a>
+            }
+            else
+            {
+                <a id="oglasid" class="btn btn-primary" href="@Url.Action("Login","Account", new { id = Model.idOglas})">Konkurisi</a>
+            }
         }
         else
         {
@@ -51,7 +56,14 @@
             <hr />
             <p>@Model.opis</p>
             <hr />
-            <a id="oglasid" class="btn btn-primary" href="@Url.Action("Konkurisi","Home", new { id = Model.idOglas})">Konkurisi</a>
+            if (Session["idKorisnik"] != null)
+            {
+                <a style="margin-bottom: 20px;" id="oglasid" class="btn btn-primary" href="@Url.Action("Konkurisi","Home", new { id = Model.idOglas})">Konkurisi</a>
+            }
+            else
+            {
+                <a style="margin-bottom:20px;" id="oglasid" class="btn btn-primary" href="@Url.Action("Login","Account", new { id = Model.idOglas})">Konkurisi</a>
+            }
         }
     </div>
 
@@ -59,9 +71,9 @@
 <script src="~/Scripts/bootstrap.js"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
 <script type="text/javascript">
-    $(document).on('click', '#backLink', function () {
-        history.go(-1);
-    });
+    function goBack() {
+        window.history.back();
+    }
 
 </script>
 <script>

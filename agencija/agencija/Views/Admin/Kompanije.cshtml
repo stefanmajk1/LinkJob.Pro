@@ -1,0 +1,63 @@
+﻿@model IEnumerable<agencija.Models.Kompanija>
+
+@{
+    ViewBag.Title = "Kompanije";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Kompanije</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.opis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.adresa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pib)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aktivnaKompanija)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.TextAreaFor(modelItem => item.opis, new { @readonly = "readonly" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.adresa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pib)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aktivnaKompanija)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "EditKompanije", new { id=item.IdKompanija }) |
+            @Html.ActionLink("Details", "DetailsKompanija", new { id=item.IdKompanija }) |
+            @Html.ActionLink("Delete", "DeleteKompanija", new { id=item.IdKompanija })
+        </td>
+    </tr>
+}
+
+</table>

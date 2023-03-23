@@ -12,34 +12,39 @@
     <link href="~/Content/login.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="center" >
-        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new {@class="form"}))
+    <div class="center">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form" }))
         {
             <h1>Login</h1>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Username, new { @class = "input", style = "border:none;", @type="text" })
+                @Html.TextBoxFor(model => model.Username, new { @class = "input", style = "border:none;", @type = "text", required = "required" })
                 <span></span>
-                @Html.LabelFor(model => model.Username, new { @class = "label" })
+                @Html.LabelFor(model => model.Username, new { @class = "label", })
+                @Html.ValidationMessageFor(model => model.Username)
 
             </div>
             <div class="txt_field">
-                @Html.TextBoxFor(model => model.Sifra, new { @class = "input", style = "border:none;",@type = "password" })
+                @Html.TextBoxFor(model => model.Sifra, new { @class = "input", style = "border:none;", @type = "password", required = "required" })
                 <span></span>
-                @Html.LabelFor(model => model.Sifra, new { @class = "label", @type="password"})
+                @Html.LabelFor(model => model.Sifra, new { @class = "label", @type = "password" })
+                @Html.ValidationMessageFor(model => model.Sifra)
 
             </div>
-            
+
             <input type="submit" value="Login" class="input" />
             <div class="signup_link">
                 Don't have an account? <a href="@Url.Action("Register", "Account")">Signup</a>
             </div>
         }
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-2">
-                <label class="label-success">@ViewBag.Greska</label>
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="form-group">
+                <div style="text-align: center;" class="col-md-offset-2 col-md-2">
+                    <label style=" color:red;" class="label-danger">@ViewBag.ErrorMessage</label>
+                </div>
             </div>
-
-        </div>
+        }
     </div>
 </body>
 </html>

@@ -35,12 +35,19 @@
             {
                 if (item.logo != null)
                 {
-
-                    <div class="item" style="text-align:center; font-family:sans-serif;">
+                    
+                    <div class="item" style="text-align:center; font-family:sans-serif; height:200px; text-align:center;">
                         <a href="@Url.Action("DetaljiKompanije","Kompanija", new { id = item.IdKompanija})">
-                            <img src="data:application/img;base64,@System.Convert.ToBase64String(item.logo)" type="application/img" />
+                            <img style="width: 200px; margin: 0 185px; height: 150px;" src="data:application/img;base64,@System.Convert.ToBase64String(item.logo)" type="application/img" />
                         </a>
                     </div>
+                }
+                else { 
+        <div class="item" style="text-align:center; font-family:sans-serif;">
+            <a href="@Url.Action("DetaljiKompanije","Kompanija", new { id = item.IdKompanija})">
+                <p>Klikni me</p>
+            </a>
+        </div>
                 }
 
 
@@ -60,7 +67,7 @@
         dots: true,
         arrows: true,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 5000,
         infinite: true
     });
 </script>

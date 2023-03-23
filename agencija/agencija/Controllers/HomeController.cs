@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -23,7 +25,84 @@ namespace agencija.Controllers
 
         Agencija_Context db = new Agencija_Context();
 
+        [HttpGet]
+        public ActionResult Kompanija()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult Kompanija(string userEmail, string adresa, int pib, string sajt, string naziv)
+        {
+            if (ModelState.IsValid)
+            {
+                MailMessage msg = new MailMessage();
+                msg.To.Add(new MailAddress("stefanmajkic00@gmail.com"));
+                msg.From = new MailAddress("majkicstefan00@gmail.com");
+                msg.Subject = "PRIJAVA KOMPANIJE";
+                msg.Body ="Email: "+ userEmail+"<br/>Pib:" + pib + "<br/>Adresa: "
+                    + adresa + "<br/>Sajt: " + sajt + "<br/>Naziv:" + naziv;
+                msg.IsBodyHtml = true;
+
+                SmtpClient smt = new SmtpClient();
+                smt.Host = "smtp.gmail.com";
+                smt.Port = 587;
+                smt.UseDefaultCredentials = false;
+                smt.Credentials = new NetworkCredential("majkicstefan00@gmail.com", "btlonhutwpdkyroq");
+                smt.EnableSsl = true;
+                smt.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smt.Send(msg);
+            }
+
+
+            return View();
+        }
+
+        public ActionResult KompanijaLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult KompanijaLogin(Korisnik k)
+        {
+            using (db = new Agencija_Context())
+            {
+                var usr = db.Korisniks.SingleOrDefault(u => u.Username == k.Username && u.Sifra == k.Sifra);
+                if (usr != null)
+                {
+                    var kompanija = db.Kompanijas.SingleOrDefault(u => u.IdKompanija == usr.idKompanija);
+                    if (usr.idRola == 2)
+                    {
+                        Session["idKompanija"] = kompanija.IdKompanija;
+
+                        HttpCookie cookie = new HttpCookie("MyCookie");
+                        cookie.Value = usr.IdKorisnik.ToString();
+                        cookie.Expires = DateTime.Now.AddHours(10);
+                        Response.Cookies.Add(cookie);
+
+                        return RedirectToAction("Index", "Poslodavac", kompanija);
+                    }
+                    else
+                    {
+                        Session["idAgentKompanije"] = usr.idKompanija;
+
+                        HttpCookie cookie = new HttpCookie("MyCookie");
+                        cookie.Value = usr.IdKorisnik.ToString();
+                        cookie.Expires = DateTime.Now.AddHours(10);
+                        Response.Cookies.Add(cookie);
+
+                        return RedirectToAction("OglasiKompanija", "Poslodavac");
+                    }
+                    
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Invalid username or password.";
+                    return View(k);
+                }
+            }
+        }
 
 
         //public JsonResult Search()
@@ -46,33 +125,66 @@ namespace agencija.Controllers
 
         //    return Json(value, JsonRequestBehavior.AllowGet);
         //}
-        
+        [HttpGet]
         public ActionResult Konkurisi(int? id)
-        { 
+        {
+            int sessionId = (int)Session["idKorisnik"];
             Ogla oglas = db.Oglas.Where(i => i.idOglas == id).SingleOrDefault();
             string cookie = Request.Cookies["MyCookie"].Value;
             Kandidat k = new Kandidat();
 
+            VirtualKandidat vk = new VirtualKandidat();
+
+            vk.idUser = sessionId;
+            vk.Korisnik = db.Korisniks.Where(i => i.IdKorisnik == vk.idUser).SingleOrDefault();
+            vk.Ogla = oglas;
+
+
             ViewBag.idOglas = id;
             ViewBag.idKorisnik = cookie;
 
-            return View(k);
+            return View(vk);
         }
         [HttpPost]
-        public ActionResult Test(Kandidat k) 
+        public ActionResult Konkurisi(VirtualKandidat k) 
         {
-            if (!ModelState.IsValid)
+            using(db = new Agencija_Context())
             {
-                return View(k);
+                var kandidat = new Kandidat()
+                {
+                    idOglas = k.idOglas,
+                    idUser = k.idUser,
+                    cv = SaveToPhysicalLocation(k.cv),
+                    propratniDokument = SaveToPhysicalLocation(k.propratniDokument)
+                };
+                db.Kandidats.Add(kandidat);
+                db.SaveChanges();
+
+                ViewBag.SuccessMessage = "Form submitted successfully.";
             }
 
-            k.cv = new byte[k.File.InputStream.Length];
-            k.File.InputStream.Read(k.cv, 0, k.cv.Length);
-
-            return Content("DetaljiOglas");
+            return View(k);
         }
-        
-        
+
+        private string SaveToPhysicalLocation(HttpPostedFileBase file)
+        {
+            if (file != null && file?.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+                file.SaveAs(path);
+                return path;
+            }
+            else
+            {
+                ModelState.AddModelError("file", "Please select a file to upload.");
+                return string.Empty;
+            }
+
+            
+        }
+
+
         //[HttpPost]
         //public ActionResult Konkurisi(Kandidat kandidat, HttpPostedFileBase propratniDokument1, HttpPostedFileBase cv1)
         //{
@@ -153,7 +265,6 @@ namespace agencija.Controllers
         {
 
 
-
             ViewBag.CurrentSort = sortOrder;
 
             if (searchString != null)
@@ -229,9 +340,148 @@ namespace agencija.Controllers
                 });
             }
 
+            var viewAds = new List<ViewAdModel>();
+
+            if (Session["idKorisnik"] != null)
+            {
+                int sessionId = (int)Session["idKorisnik"];
 
 
-            return View(empList.ToPagedList(pageNumber, pageSize));
+                foreach (var ad in empList)
+                {
+                    bool isLiked = db.OmiljeniOglasis.Any(l => l.OglasId == ad.idOglas && l.KorisnikId == sessionId);
+                    viewAds.Add(new ViewAdModel
+                    {
+                        AdId = ad.idOglas,
+                        IsLiked = isLiked,
+                        Title = ad.naslov,
+                        Description = ad.opis,
+                        Istice = ad.istice,
+                        Poseta = ad.poseta,
+                        Kategorija = ad.Kategorija,
+                        Mesto = ad.Mesto,
+                        Iskustvo = ad.Iskustvo,
+                        Kompanija = ad.Kompanija
+                    });
+                }
+
+
+
+                return View(viewAds.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                foreach (var ad in empList)
+                {
+                    bool isLiked = db.OmiljeniOglasis.Any(l => l.OglasId == ad.idOglas);
+                    viewAds.Add(new ViewAdModel
+                    {
+                        AdId = ad.idOglas,
+                        Title = ad.naslov,
+                        Description = ad.opis,
+                        Istice = ad.istice,
+                        Poseta = ad.poseta,
+                        Kategorija = ad.Kategorija,
+                        Mesto = ad.Mesto,
+                        Iskustvo = ad.Iskustvo,
+                        Kompanija = ad.Kompanija
+                    });
+                }
+
+                return View(viewAds.ToPagedList(pageNumber, pageSize));
+            }
+
+            
+
+
+
+        }
+        public ActionResult OmiljeniOglasi1(int id)
+        {
+
+            using (db = new Agencija_Context())
+            {
+                OmiljeniOglasi og = db.OmiljeniOglasis.Where(x => x.OglasId == id).FirstOrDefault();
+
+                db.OmiljeniOglasis.Remove(og);
+                db.SaveChanges();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult OmiljeniOglasi(int? adId)
+        {
+            int userId = (int)Session["idKorisnik"];
+            var likedAd = db.OmiljeniOglasis.FirstOrDefault(a => a.OglasId == adId && a.KorisnikId == userId);
+
+            if (likedAd != null)
+            {
+                db.OmiljeniOglasis.Remove(likedAd);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home", null);
+            }
+            else
+            {
+                likedAd = new OmiljeniOglasi { OglasId = (int)adId, KorisnikId = userId };
+                db.OmiljeniOglasis.Add(likedAd);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home", null);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Like(int adId)
+        {
+            try
+            {
+                int userId = (int)Session["idKorisnik"];
+                var likedAd = db.OmiljeniOglasis.FirstOrDefault(a => a.OglasId == adId && a.KorisnikId == userId);
+
+                if (likedAd != null)
+                {
+                    db.OmiljeniOglasis.Remove(likedAd);
+                    db.SaveChanges();
+                    return Json(new { success = true, isLiked = false });
+                }
+                else
+                {
+                    likedAd = new OmiljeniOglasi { OglasId = adId, KorisnikId = userId };
+                    db.OmiljeniOglasis.Add(likedAd);
+                    db.SaveChanges();
+                    return Json(new { success = true, isLiked = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult Remove(int adId)
+        {
+            try
+            {
+                int userId = (int)Session["idKorisnik"];
+                var likedAd = db.OmiljeniOglasis.FirstOrDefault(a => a.OglasId == adId && a.KorisnikId == userId);
+
+                if (likedAd != null)
+                {
+                    db.OmiljeniOglasis.Remove(likedAd);
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Ad unliked successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Ad is not liked." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+
         }
 
         public ActionResult DetaljiOglas(int? id)

@@ -16,183 +16,183 @@ namespace agencija.Controllers
         PoslovniKorisnik ps = new PoslovniKorisnik();
         Agencija_Context db = new Agencija_Context();
         // GET: PoslovniKorisnik
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public JsonResult GetKategorije()
-        {
-            db.Configuration.LazyLoadingEnabled = false;
-            List<Kategorija> k = db.Kategorijas.ToList();
-            return Json(k, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetMesto()
-        {
-            db.Configuration.LazyLoadingEnabled = false;
-            List<Mesto> m = db.Mestoes.ToList();
-            return Json(m, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetIskustvo()
-        {
-            db.Configuration.LazyLoadingEnabled = false;
-            List<Iskustvo> i = db.Iskustvoes.ToList();
-            return Json(i, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult UnosNovogOglasa()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+        //public JsonResult GetKategorije()
+        //{
+        //    db.Configuration.LazyLoadingEnabled = false;
+        //    List<Kategorija> k = db.Kategorijas.ToList();
+        //    return Json(k, JsonRequestBehavior.AllowGet);
+        //}
+        //public JsonResult GetMesto()
+        //{
+        //    db.Configuration.LazyLoadingEnabled = false;
+        //    List<Mesto> m = db.Mestoes.ToList();
+        //    return Json(m, JsonRequestBehavior.AllowGet);
+        //}
+        //public JsonResult GetIskustvo()
+        //{
+        //    db.Configuration.LazyLoadingEnabled = false;
+        //    List<Iskustvo> i = db.Iskustvoes.ToList();
+        //    return Json(i, JsonRequestBehavior.AllowGet);
+        //}
+        //public ActionResult UnosNovogOglasa()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public JsonResult DodajOglas(string Istice, string Naslov, string Opis, int kategorijaID, int mestoID, int idIskustvo)
-        {
-            string novOglas = ps.NovOglas(Istice, Naslov, Opis, kategorijaID, mestoID, idIskustvo);
-            return Json(novOglas);
-        }
+        //[HttpPost]
+        //public JsonResult DodajOglas(string Istice, string Naslov, string Opis, int kategorijaID, int mestoID, int idIskustvo)
+        //{
+        //    string novOglas = ps.NovOglas(Istice, Naslov, Opis, kategorijaID, mestoID, idIskustvo);
+        //    return Json(novOglas);
+        //}
 
-        [HttpGet]
-        public ActionResult OglasiZaPLacanje()
-        {
-            List<OglasVezaSaKljucevima> oglasiZaPlacanje = ps.OglasiZaPlacanje().ToList();
-            return View(oglasiZaPlacanje);
-        }
-        //Izmeniti upit za placenje oglase detalje
-        [HttpGet]
-        public ActionResult DetaljiNeplacenogOglasa(int? id)
-        {
-            OglasVezaSaKljucevima oglasVezaSaKljucevima = ps.OglasiZaPlacanje().Where(o => o.idOglas == id).SingleOrDefault();
-            return View(oglasVezaSaKljucevima);
-        }
-        [HttpGet]
-        public ActionResult DetaljiObjavljenogOglasa(int? id)
-        {
-            OglasVezaSaKljucevima detaljiObjavljenog = ps.ObjavljeniOglasi().Where(o => o.idOglas == id).SingleOrDefault();
-            return View(detaljiObjavljenog);
-        }
-        [HttpGet]
-        public ActionResult ObjavljeniOglasi()
-        {
-            List<OglasVezaSaKljucevima> objavljeniOglasi = ps.ObjavljeniOglasi().ToList();
-            return View(objavljeniOglasi);
-        }
-        [HttpGet]
-        public ActionResult IstekliOglasi()
-        {
-            List<OglasVezaSaKljucevima> istekao = ps.IstekliOglasi();
-            return View(istekao);
-        }
-        [HttpPost]
-        public ActionResult BrisanjeIsteklogOglasa(int? id)
-        {
-            if (ps.BrisanjeIsteklogOglasa(id))
-            {
-                return RedirectToAction("IstekliOglasi");
-            }
-            else
-            {
-                return RedirectToAction("IstekliOglasi");
-            }
-        }
+        //[HttpGet]
+        //public ActionResult OglasiZaPLacanje()
+        //{
+        //    List<OglasVezaSaKljucevima> oglasiZaPlacanje = ps.OglasiZaPlacanje().ToList();
+        //    return View(oglasiZaPlacanje);
+        //}
+        ////Izmeniti upit za placenje oglase detalje
+        //[HttpGet]
+        //public ActionResult DetaljiNeplacenogOglasa(int? id)
+        //{
+        //    OglasVezaSaKljucevima oglasVezaSaKljucevima = ps.OglasiZaPlacanje().Where(o => o.idOglas == id).SingleOrDefault();
+        //    return View(oglasVezaSaKljucevima);
+        //}
+        //[HttpGet]
+        //public ActionResult DetaljiObjavljenogOglasa(int? id)
+        //{
+        //    OglasVezaSaKljucevima detaljiObjavljenog = ps.ObjavljeniOglasi().Where(o => o.idOglas == id).SingleOrDefault();
+        //    return View(detaljiObjavljenog);
+        //}
+        //[HttpGet]
+        //public ActionResult ObjavljeniOglasi()
+        //{
+        //    List<OglasVezaSaKljucevima> objavljeniOglasi = ps.ObjavljeniOglasi().ToList();
+        //    return View(objavljeniOglasi);
+        //}
+        //[HttpGet]
+        //public ActionResult IstekliOglasi()
+        //{
+        //    List<OglasVezaSaKljucevima> istekao = ps.IstekliOglasi();
+        //    return View(istekao);
+        //}
+        //[HttpPost]
+        //public ActionResult BrisanjeIsteklogOglasa(int? id)
+        //{
+        //    if (ps.BrisanjeIsteklogOglasa(id))
+        //    {
+        //        return RedirectToAction("IstekliOglasi");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("IstekliOglasi");
+        //    }
+        //}
 
-        public JsonResult PronadjiOglas(int id)
-        {
-            db.Configuration.LazyLoadingEnabled = false;
-            Ogla oglas = db.Oglas.Find(id);
-            return Json(oglas, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult IzmeniOglas(int id, string istice, string naslov, string opis, int kategorijaID, int mestoID, int idIskustvo)
-        {
-            string izmenaOglasa = ps.IzmenaOglasaValidacija(id, istice, naslov, opis, kategorijaID, mestoID, idIskustvo);
-            return Json(izmenaOglasa);
-        }
+        //public JsonResult PronadjiOglas(int id)
+        //{
+        //    db.Configuration.LazyLoadingEnabled = false;
+        //    Ogla oglas = db.Oglas.Find(id);
+        //    return Json(oglas, JsonRequestBehavior.AllowGet);
+        //}
+        //[HttpPost]
+        //public JsonResult IzmeniOglas(int id, string istice, string naslov, string opis, int kategorijaID, int mestoID, int idIskustvo)
+        //{
+        //    string izmenaOglasa = ps.IzmenaOglasaValidacija(id, istice, naslov, opis, kategorijaID, mestoID, idIskustvo);
+        //    return Json(izmenaOglasa);
+        //}
 
-        [HttpGet]
-        public ActionResult Kandidati(int? id, int page = 1, int pageSize = 3)
-        {
-            List<KorisnikKandidat> korisnici = ps.Kandidati(id).ToList();
-            PagedList<KorisnikKandidat> pagedList = new PagedList<KorisnikKandidat>(korisnici, page, pageSize);
-            return View(pagedList);
-        }
-        public ActionResult DetaljiKandidata(int? id, int? idOglas)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            KorisnikKandidat korisnik = ps.DetaljiKandidata(id, idOglas);
-            return View(korisnik);
-        }
+        //[HttpGet]
+        //public ActionResult Kandidati(int? id, int page = 1, int pageSize = 3)
+        //{
+        //    List<KorisnikKandidat> korisnici = ps.Kandidati(id).ToList();
+        //    PagedList<KorisnikKandidat> pagedList = new PagedList<KorisnikKandidat>(korisnici, page, pageSize);
+        //    return View(pagedList);
+        //}
+        //public ActionResult DetaljiKandidata(int? id, int? idOglas)
+        //{
+        //    db.Configuration.ProxyCreationEnabled = false;
+        //    KorisnikKandidat korisnik = ps.DetaljiKandidata(id, idOglas);
+        //    return View(korisnik);
+        //}
 
-        [HttpGet]
-        public FileResult GetPdf(int? id)
-        {
-            using (var db = new Agencija_Context())
-            {
-                Kandidat kandidat = db.Kandidats.Where(x => x.idKandidat == id).SingleOrDefault();
-                var pdf = kandidat.fileTypeCV.Substring(12, 3);
+        ////[HttpGet]
+        ////public FileResult GetPdf(int? id)
+        ////{
+        ////    using (var db = new Agencija_Context())
+        ////    {
+        ////        Kandidat kandidat = db.Kandidats.Where(x => x.idKandidat == id).SingleOrDefault();
+        ////        var pdf = kandidat.fileTypeCV.Substring(12, 3);
 
-                return File(kandidat.cv, "application/pdf");
-
-
-            }
-        }
-        [HttpGet]
-        public FileResult GetPropratniDokument(int? id, int? idOglas)
-        {
-            using (var db = new Agencija_Context())
-            {
-                Kandidat kandidat = db.Kandidats.Where(x => x.idUser == id && x.idOglas == idOglas).SingleOrDefault();
-                var pdf = kandidat.fileTypePropratniDokument.Substring(12, 3);
-
-                return File(kandidat.propratniDokument, "application/pdf");
+        ////        return File(kandidat.cv, "application/pdf");
 
 
-            }
-        }
-        [HttpPost]
-        public FileResult DownloadFile(int? idKandidat)
-        {
-            using (var db = new Agencija_Context())
-            {
-                Kandidat kandidat = db.Kandidats.Where(x => x.idKandidat == idKandidat).SingleOrDefault();
-                return File(kandidat.propratniDokument, kandidat.fileTypePropratniDokument);
-            }
-        }
+        ////    }
+        ////}
+        ////[HttpGet]
+        ////public FileResult GetPropratniDokument(int? id, int? idOglas)
+        ////{
+        ////    using (var db = new Agencija_Context())
+        ////    {
+        ////        Kandidat kandidat = db.Kandidats.Where(x => x.idUser == id && x.idOglas == idOglas).SingleOrDefault();
+        ////        var pdf = kandidat.fileTypePropratniDokument.Substring(12, 3);
 
-        [HttpPost]
-        public FileResult DownloadFileCV(int? idKandidat)
-        {
-            using (var db = new Agencija_Context())
-            {
-                Kandidat kandidat = db.Kandidats.Where(x => x.idKandidat == idKandidat).SingleOrDefault();
-                return File(kandidat.cv, kandidat.fileTypeCV);
-            }
-        }
+        ////        return File(kandidat.propratniDokument, "application/pdf");
 
 
-        [HttpPost]
-        public JsonResult SlanjeEmailKandidat(int? id, string Email, string Datum, string Ulica, string Izbor, string EmailKorisnik, string pass)
-        {
-            string validacijaPodataka = ps.SlanjeEmailKandidat(id, Email, Datum, Ulica, Izbor, EmailKorisnik, pass);
-            return Json(validacijaPodataka);
+        ////    }
+        ////}
+        ////[HttpPost]
+        ////public FileResult DownloadFile(int? idKandidat)
+        ////{
+        ////    using (var db = new Agencija_Context())
+        ////    {
+        ////        Kandidat kandidat = db.Kandidats.Where(x => x.idKandidat == idKandidat).SingleOrDefault();
+        ////        return File(kandidat.propratniDokument, kandidat.fileTypePropratniDokument);
+        ////    }
+        ////}
 
-        }
+        ////[HttpPost]
+        ////public FileResult DownloadFileCV(int? idKandidat)
+        ////{
+        ////    using (var db = new Agencija_Context())
+        ////    {
+        ////        Kandidat kandidat = db.Kandidats.Where(x => x.idKandidat == idKandidat).SingleOrDefault();
+        ////        return File(kandidat.cv, kandidat.fileTypeCV);
+        ////    }
+        ////}
 
-        public ActionResult SlanjeMejlaPlacanje(int? idOglas)
-        {
-            Ogla oglas = db.Oglas.Where(x => x.idOglas == idOglas).SingleOrDefault();
-            return View(oglas);
-        }
-        [HttpPost]
-        public JsonResult SlanjeMejlaPlacanje1(int IdKompanija, string naslov, string email, string Izbor)
-        {
-            string validacijaPodataka = ps.SlanjeMejlaPlacanje1(IdKompanija, naslov, email, Izbor);
-            return Json(validacijaPodataka);
-        }
-        [HttpGet]
-        public ActionResult ProfilKompanije(string email = "nesto@gmail.com")
-        {
-            Kompanija kompanija = ps.Profil(email);
-            return View(kompanija);
-        }
+
+        //[HttpPost]
+        //public JsonResult SlanjeEmailKandidat(int? id, string Email, string Datum, string Ulica, string Izbor, string EmailKorisnik, string pass)
+        //{
+        //    string validacijaPodataka = ps.SlanjeEmailKandidat(id, Email, Datum, Ulica, Izbor, EmailKorisnik, pass);
+        //    return Json(validacijaPodataka);
+
+        //}
+
+        //public ActionResult SlanjeMejlaPlacanje(int? idOglas)
+        //{
+        //    Ogla oglas = db.Oglas.Where(x => x.idOglas == idOglas).SingleOrDefault();
+        //    return View(oglas);
+        //}
+        //[HttpPost]
+        //public JsonResult SlanjeMejlaPlacanje1(int IdKompanija, string naslov, string email, string Izbor)
+        //{
+        //    string validacijaPodataka = ps.SlanjeMejlaPlacanje1(IdKompanija, naslov, email, Izbor);
+        //    return Json(validacijaPodataka);
+        //}
+        //[HttpGet]
+        //public ActionResult ProfilKompanije(string email = "nesto@gmail.com")
+        //{
+        //    Kompanija kompanija = ps.Profil(email);
+        //    return View(kompanija);
+        //}
 
         //public ActionResult Konkurisi()
         //{

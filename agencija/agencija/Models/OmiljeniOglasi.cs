@@ -10,14 +10,13 @@ namespace agencija.Models
     public partial class OmiljeniOglasi
     {
         [Key]
-        public int IdOmiljeniOglas { get; set; }
+        public int IdOmiljeniOglasi { get; set; }
 
-        public int IdOglas { get; set; }
+        public int OglasId { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime Dodat { get; set; }
+        public int KorisnikId { get; set; }
 
-        public int Kolicina { get; set; }
+        public virtual Korisnik Korisnik { get; set; }
 
         public virtual Ogla Ogla { get; set; }
     }

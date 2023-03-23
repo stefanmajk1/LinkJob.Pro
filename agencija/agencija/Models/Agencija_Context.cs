@@ -8,7 +8,7 @@ namespace agencija.Models
     public partial class Agencija_Context : DbContext
     {
         public Agencija_Context()
-            : base("name=Agencija_Context1")
+            : base("name=Agencija_Context")
         {
         }
 
@@ -30,10 +30,6 @@ namespace agencija.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CenovnikOglasa>()
-                .Property(e => e.istaknut)
-                .IsFixedLength();
-
-            modelBuilder.Entity<CenovnikOglasa>()
                 .HasMany(e => e.UplataOglasas)
                 .WithRequired(e => e.CenovnikOglasa)
                 .HasForeignKey(e => e.idCenovnikOglasa)
@@ -50,14 +46,14 @@ namespace agencija.Models
                 .WithRequired(e => e.Iskustvo)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Kandidat>()
-                .Property(e => e.fileTypePropratniDokument)
-                .IsFixedLength();
-
             modelBuilder.Entity<Kategorija>()
                 .HasMany(e => e.Oglas)
                 .WithRequired(e => e.Kategorija)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Kompanija>()
+                .Property(e => e.idOglas)
+                .IsFixedLength();
 
             modelBuilder.Entity<Kompanija>()
                 .HasMany(e => e.Oglas)
@@ -73,6 +69,12 @@ namespace agencija.Models
                 .HasMany(e => e.Kandidats)
                 .WithRequired(e => e.Korisnik)
                 .HasForeignKey(e => e.idUser)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Korisnik>()
+                .HasMany(e => e.OmiljeniOglasis)
+                .WithRequired(e => e.Korisnik)
+                .HasForeignKey(e => e.KorisnikId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Korisnik>()
@@ -93,6 +95,7 @@ namespace agencija.Models
             modelBuilder.Entity<Ogla>()
                 .HasMany(e => e.OmiljeniOglasis)
                 .WithRequired(e => e.Ogla)
+                .HasForeignKey(e => e.OglasId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Rola>()

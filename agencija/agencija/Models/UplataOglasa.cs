@@ -11,24 +11,17 @@ namespace agencija.Models
     {
         public int idKompanija { get; set; }
 
-        public int uplaceno { get; set; }
-
         [Key]
         public int idCenovnikUplataOglasa { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime datumUplate { get; set; }
 
-        public bool aktivnaUplataOglasa { get; set; }
-
         public int idCenovnikOglasa { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime datumTrajanja { get; set; }
+        public int cena { get; set; }
 
-        public int? oglasId { get; set; }
-
-        public int? cena { get; set; }
+        public int oglasi { get; set; }
 
         public virtual CenovnikOglasa CenovnikOglasa { get; set; }
 

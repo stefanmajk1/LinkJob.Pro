@@ -46,6 +46,9 @@ namespace agencija.Models
 
         public bool? aktivnaKompanija { get; set; }
 
+        [StringLength(10)]
+        public string idOglas { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ogla> Oglas { get; set; }
 

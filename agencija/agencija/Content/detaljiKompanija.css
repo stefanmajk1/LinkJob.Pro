@@ -33,13 +33,12 @@ html {
 
 .image-section {
     float: right;
-    width: 40%;
+    /* width: 40%;*/
 }
 
     .image-section img {
         border: none;
-        border-radius: 50%;
-        width: 80%;
+        width: 100%;
         height: auto;
     }
 

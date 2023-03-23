@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Kompanija</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/Poslodavac_/createAcc.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm("Kompanija", "Home", FormMethod.Post))
+            {
+                <div class="container" style="height:600px;">
+                    <form method="post" autocomplete="on">
+                        <h1 style="text-align:center; color:white; margin-bottom:80px">Create Account</h1>
+                        <!--First name-->
+                        <div class="box">
+                            <label for="firstName" class="fl fontLabel"> Pib: </label>
+                            <div class="new iconBox">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="fr">
+                                <input id="pib" name="pib" type="number" placeholder="Enter you'rs companies Pib"
+                                       class="textBox" autofocus="on" required>
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                        <!--First name-->
+                        <!--Second name-->
+                        <div class="box">
+                            <label for="secondName" class="fl fontLabel"> Adress: </label>
+                            <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <div class="fr">
+                                <input id="adresa" name="adresa" type="text"
+                                       placeholder="Enter Adress" class="textBox">
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                        <!--Second name-->
+                        <!---Email ID---->
+                        <div class="box">
+                            <label for="email" class="fl fontLabel"> Email: </label>
+                            <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                            <div class="fr">
+                                <input id="userEmail" name="userEmail" type="email" placeholder="Email " class="textBox">
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                        <div class="box">
+                            <label for="sajt" class="fl fontLabel"> Sajt: </label>
+                            <div class="fl iconBox"><i class="fa fa-window-maximize" aria-hidden="true"></i></div>
+                            <div class="fr">
+                                <input id="sajt" name="sajt" type="url" placeholder="Sajt " class="textBox">
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                        <div class="box">
+                            <label for="naziv" class="fl fontLabel"> Naziv kompanije: </label>
+                            <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <div class="fr">
+                                <input id="naziv" name="naziv" type="text" placeholder="Naziv kompanije " class="textBox">
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                        <div class="box" style="background: #2d3e3f; margin-bottom:30px;">
+                            @*<input type="Submit" name="Submit" class="submit" value="SUBMIT">*@
+                            <input class="submit" type="submit" value="SUBMIT" />
+                        </div>
+                        <div class="box" style="float:left;">
+                            <p style="margin-bottom:10px; color:white;">If you have an account, just Login:</p>
+                            <a class="fl fontLabel" href="@Url.Action("KompanijaLogin", "Home")" style=" text-align:center; font-weight:bold; color:white; text-decoration:none; border:solid gold; border-radius:10px; background-color:darkorange;">LOGIN</a>
+                        </div>
+                    </form>
+                </div>
+            }
+
+    
+
+        <!--<div class="right">
+            <input id="userEmail" name="userEmail" type="email" class="field" placeholder="Unesite Vase email" />-->
+        @*<input id="adresa" name="adresa" type="text" class="field" placeholder="Unesite Vasu adresu" />*@
+        @*<input id="pib" name="pib" type="number" class="field" placeholder="Unesite Vas pib" />*@
+        @*<input class="submit" type="submit" value="Posalji" />*@
+        @*<button class="btn" onclick="sendEmail()">Posalji</button>*@
+        <!--</div>-->
+        <!-- Body of Form starts -->
+        <!--<div class="container">
+            <form method="post" autocomplete="on">
+                <!--First name-->
+                <!--<div class="box">
+                    <label for="firstName" class="fl fontLabel"> Pib: </label>
+                    <div class="new iconBox">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                    <div class="fr">
+                        <input id="pib" name="pib" type="number" placeholder="Enter you'rs companies Pib"
+                               class="textBox" autofocus="on" required>
+                    </div>
+                    <div class="clr"></div>
+                </div>-->
+                <!--First name-->
+                <!--Second name-->
+                <!--<div class="box">
+                    <label for="secondName" class="fl fontLabel"> Adress: </label>
+                    <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div class="fr">
+                        <input id="adresa" name="adresa" type="text"
+                               placeholder="Enter Adress" class="textBox">
+                    </div>
+                    <div class="clr"></div>
+                </div>-->
+                <!--Second name-->
+                <!---Email ID---->
+                <!--<div class="box">
+                    <label for="email" class="fl fontLabel"> Email: </label>
+                    <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                    <div class="fr">
+                        <input id="userEmail" name="userEmail" type="email" placeholder="Email " class="textBox">
+                    </div>
+                    <div class="clr"></div>
+                </div>-->
+                <!--Email ID----->
+                <!--Terms and Conditions------>
+                <!---Submit Button------>
+                <!--<div class="box" style="background: #2d3e3f">-->
+                    @*<input type="Submit" name="Submit" class="submit" value="SUBMIT">*@
+                   
+                <!---Submit Button----->
+            <!--</form>
+        </div>-->
+        <!--Body of Form ends--->
+
+
+
+    </body>
+</html>

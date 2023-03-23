@@ -33,7 +33,7 @@
                             <li><a href="@Url.Action("QA", "Poslovi")" target="_blank"><b style="color: gray">QA</b></a></li>
                             <li><a href="@Url.Action("Programiranje", "Poslovi")" target="_blank"><b style="color: gray">Programiranje</b></a></li>
                             <li><a href="@Url.Action("Podrska", "Poslovi")" target="_blank"><b style="color: gray">Menadzment</b></a></li>
-                            <li><a href="@Url.Action("Sistem", "Poslovi")" target="_blank"><b style="color: gray">Sistemska administracija</b></a></li>
+                            <li><a href="@Url.Action("Sistem", "Poslovi")" target="_blank"><b style="color: gray">Sistemska Administracija</b></a></li>
                         </ul>
                     </li>
                     <li><a href="@Url.Action("Kompanije", "Kompanija")"><b>Kompanije</b></a></li>
@@ -48,7 +48,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">User</b><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#"><b style="color:gray">User account</b></a></li>
+                                    <li><a href="@Url.Action("UserAccount", "Account")"><b style="color:gray">User account</b></a></li>
                                     <li><a href="@Url.Action("Logout", "Account")"><b style="color:gray">Logout</b></a></li>
                                 </ul>
                             </li>
@@ -61,7 +61,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">Prijavi se</b><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="@Url.Action("Login", "Account")"><b style="color:gray">Kao korisnik</b></a></li>
-                                    <li><a href="#"><b style="color:gray">Kao poslodavac</b></a></li>
+                                    <li><a href="@Url.Action("KompanijaLogin", "Home")"><b style="color:gray">Kao poslodavac</b></a></li>
                                 </ul>
                             </li>
 
@@ -72,7 +72,7 @@
         </div><!-- /.container-fluid -->
     </nav>
     @RenderBody()
-    <section class="footer">
+    <section class="footer" style="  bottom: 0;">
         <div class="social">
             <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             <a href="https://www.instagram.com/?hl=en" target="_blank"><i class="fa-brands fa-instagram"></i></a>

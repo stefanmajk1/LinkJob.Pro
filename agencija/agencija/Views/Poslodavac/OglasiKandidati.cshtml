@@ -1,0 +1,27 @@
+﻿@model IEnumerable<agencija.Models.Ogla>
+@{
+    ViewBag.Title = "OglasiKandidati";
+    Layout = "~/Views/Shared/_PoslovniKorisnik.cshtml";
+}
+
+<h2>Oglasi</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Naslov Oglasa</th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.naslov)</td>
+                    <td><a href="@Url.Action("KandidatiOglasa","Poslodavac", new {id = item.idOglas})">Kandidati</a></td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+
+

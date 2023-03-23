@@ -1,0 +1,96 @@
+﻿@model agencija.Models.Kompanija
+
+@{
+    ViewBag.Title = "DetailsKompanija";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>DetailsKompanija</h2>
+
+<div>
+    <h4>Kompanija</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.video)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.video)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sajt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sajt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.opis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.opis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.logo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.logo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pib)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pib)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aktivnaKompanija)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aktivnaKompanija)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.idOglas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.idOglas)
+        </dd>
+
+    </dl>
+</div>
+

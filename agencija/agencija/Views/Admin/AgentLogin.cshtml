@@ -1,0 +1,58 @@
+﻿@model agencija.Models.Korisnik
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Agent Login</title>
+    <link href="~/Content/adminLogin/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                @using (Html.BeginForm("AgentLogIn", "Admin", FormMethod.Post))
+                {
+                    <form class="login">
+                        <div class="login__field">
+                            <br /><br /><br /><br /><br />
+                            <i class="login__icon fas fa-user"></i>
+                            @*<input type="text" class="login__input" placeholder="User name / Email">*@
+                            @Html.TextBoxFor(model => model.Username, new { @class = "login__input", @type = "text", @placeholder = "User name / Email", required = "required" })
+                        </div>
+                        <div class="login__field">
+                            <i class="login__icon fas fa-lock"></i>
+                            @Html.TextBoxFor(model => model.Sifra, new { @class = "login__input", @type = "password", @placeholder = "Password", required = "required" })
+
+                        </div>
+                        <button class="button login__submit">
+                            <span class="button__text">Log In Now</span>
+                            <i class="button__icon fas fa-chevron-right"></i>
+                        </button>
+                        @if (!string.IsNullOrEmpty(ViewBag.ErrorGreska))
+                        {
+                        <div style="margin-top:20px; font-weight:bold;" class="form-group">
+                            <div style="text-align: center;" class="col-md-offset-2 col-md-2">
+                                <label style=" color:red;" class="label-danger">@ViewBag.ErrorGreska</label>
+                            </div>
+                        </div>
+                        }
+                    </form>
+                    
+                }
+
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

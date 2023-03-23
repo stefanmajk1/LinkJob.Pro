@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<agencija.Models.Ogla>
+﻿@model PagedList.IPagedList<agencija.Models.ViewAdModel>
 
 
 @using PagedList.Mvc;
@@ -6,6 +6,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
+
 <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
 <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
 <link rel="stylesheet"
@@ -44,55 +45,74 @@
         </div>
     </div>@*Kraj Search olgasa*@
 
-
-    @foreach (var item in Model)
+    @if (Session["idKorisnik"] != null)
     {
-
-        if (item.omiljen == 1)
+        foreach (var ad in Model)
         {
-            <div class="detalji-kompanije" onload="nmp()">
+
+
+            <div class="detalji-kompanije" onload="nmp()" style="border: 2px solid #51bfff; border-radius:5px;">
                 <div class="posao">
                     <h4 style="float:left;">
-                        <a id="oglasid" href="@Url.Action("DetaljiOglas","Home", new { id = item.idOglas})"><b>@item.naslov</b></a>
+                        <a id="oglasid" href="@Url.Action("DetaljiOglas","Home", new { id = ad.AdId})"><b>@ad.Title</b></a>
                     </h4><br /><br />
-                    <a data-id=@item.omiljen onclick="Toggle1(@item.omiljen)" href="@Url.Action("UbaciOglas","OmiljeniOglasi", new { id = item.idOglas}, null)">
-                        <button style="color: red; background: transparent; border: none; outline: none;" class="btn" id="btnh1">
-                            <i class="fas fa-heart"></i>
-                        </button>
+                               @*<a href="@Url.Action("OmiljeniOglasi", "Home", new {id = ad.AdId})" id="@ad.AdId" class="btn-heart btn-like" data-adid="@ad.AdId" style="background: transparent; border: none; outline: none; float: right;">
+                                       @if (ad.IsLiked == true)
+                                       {
+                                           <i class="fa fa-heart" style="font-size:25px;color:red;"></i>
+                                       }
+                                       else
+                                       {
+                                           <i class="fa fa-heart" style="font-size:25px;color:grey;"></i>
+                                       }
+                               </a>*@
+                               <button  id="@ad.AdId" class="btn-heart btn-like" data-adid="@ad.AdId" style="background: transparent; border: none; outline: none; float: right;">
+                                   @if(ad.IsLiked == true){
+                                   <i class="fa fa-heart" style="font-size:25px;color:red;"></i>
+                                   }else{
+                                   <i class="fa fa-heart" style="font-size:25px;color:grey;"></i>
+                                   }
+                               </button>
+                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = ad.Kompanija.IdKompanija})">
+                        <p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => ad.Kompanija.naziv)</b></p>
                     </a>
-                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = item.Kompanija.IdKompanija})"><p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p></a>
                     @*<p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>*@<br /><br />
                     <i class="glyphicon glyphicon-map-marker"></i>
-                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Mesto.naziv)</b></span><br /><br />
-                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</button>
-                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</button>
+                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => ad.Mesto.naziv)</b></span><br /><br />
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => ad.Kategorija.naziv)</button>
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => ad.Iskustvo.naziv)</button>
                 </div>
             </div>
         }
-        else
+    }
+    else
+    {
+        foreach (var ad in Model)
         {
-            
+
+
             <div class="detalji-kompanije" onload="nmp()">
                 <div class="posao">
                     <h4 style="float:left;">
-                        <a id="oglasid" href="@Url.Action("DetaljiOglas","Home", new { id = item.idOglas})"><b>@item.naslov</b></a>
+                        <a id="oglasid" href="@Url.Action("DetaljiOglas","Home", new { id = ad.AdId})"><b>@ad.Title</b></a>
                     </h4><br /><br />
-                    <a onclick="Toggle1(@item.omiljen)" href="@Url.Action("UbaciOglas","OmiljeniOglasi", new { id = item.idOglas}, null)">
-                        <button style="color: grey; background: transparent; border: none; outline: none;" class="btn" id="btnh1">
-                            <i class="fas fa-heart"></i>
-                        </button>
+                   
+                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = ad.Kompanija.IdKompanija})">
+                        <p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => ad.Kompanija.naziv)</b></p>
                     </a>
-                    <a style="float:left" id="oglasid" href="@Url.Action("DetaljiKompanije", "Kompanija", new {id = item.Kompanija.IdKompanija})"><p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p></a><br />
-                    @*<p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>*@<br />
+                    @*<p style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Kompanija.naziv)</b></p>*@<br /><br />
                     <i class="glyphicon glyphicon-map-marker"></i>
-                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => item.Mesto.naziv)</b></span><br /><br />
-                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Kategorija.naziv)</button>
-                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => item.Iskustvo.naziv)</button>
+                    <span style="color:gray; font-size:medium"><b>@Html.DisplayFor(modelItem => ad.Mesto.naziv)</b></span><br /><br />
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => ad.Kategorija.naziv)</button>
+                    <button id="oglasIskustvo" class="btn btn-primary">@Html.DisplayFor(modelItem => ad.Iskustvo.naziv)</button>
                 </div>
             </div>
         }
-
     }
+
+
+
+    
 
     <br />
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
@@ -102,29 +122,61 @@
 </div>
 
 <script>
-    
-    function Toggle1(c) {
-        var id = this.c;
+    $(document).ready(function () {
+        $(".btn-heart").click(function () {
+            var btn = $(this);
+            var adId = btn.data("adid");
+            if (btn.hasClass("liked")) {
+                btn.removeClass("liked");
+                btn.css("color", "gray");
+                localStorage.removeItem(adId);
+                $.ajax({
+                    url: '/Home/Remove',
+                    type: 'POST',
+                    data: { adId: adId },
+                    success: function (data) {
+                        if (!data.success) {
+                            alert("An error occurred.");
+                        }
+                    }
+                });
+                alert("Ad is removed!");
+                location.reload();
+            } else {
+                btn.addClass("liked");
+                btn.css("color", "red");
+                localStorage.setItem(adId, "liked");
+                $.ajax({
+                    url: '/Home/Like',
+                    type: 'POST',
+                    data: { adId: adId },
+                    success: function (data) {
+                        if (!data.success) {
+                            btn.removeClass("liked");
+                            btn.css("color", "gray");
 
-        c.style.color = c.style.color == "red" ? "grey" : "red";
-
-       
-        return
-    }
-
-    $("#deleteRecord").click(function () {
-        alert("USAO");
-        var StudentId = $(this).data("model-id");
-        var url = "OmiljeniOglasiController/Delete1" + StudentId;
-        $.ajax({
-            url: url,
-            type: 'Delete'
-        }).done(function () {
-            alert("Obrisan")
-        }).error(function () {
-            alert("Neuspesno")
+                            localStorage.removeItem(adId);
+                            alert("An error occurred.");
+                        }
+                    }
+                });
+                
+                alert("Acction was success!");
+                location.reload();
+            }
         });
-    }
+    });
+    /*
+    $(document).ready(function () {
+        $(".btn-heart").each(function () {
+            var btn = $(this);
+            var adId = btn.data("adid");
+            if (localStorage.getItem(adId) === "liked") {
+                btn.addClass("liked");
+                btn.css("color", "red");
+            }
+        });
+    });*/
 
 </script>
 

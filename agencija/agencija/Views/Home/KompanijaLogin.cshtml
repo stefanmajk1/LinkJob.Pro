@@ -1,0 +1,63 @@
+﻿@model agencija.Models.Korisnik
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>KompanijaLogin</title>
+    <link href="~/Content/Poslodavac_/login.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    @using (Html.BeginForm("KompanijaLogin", "Home", FormMethod.Post, new { @class = "form" }))
+    {
+        <form>
+            <h3>Login Here</h3>
+            <label for="username">@Html.LabelFor(model => model.Username, new { @class = "label" })</label>
+            @*<input type="text" placeholder="Username" id="username">*@
+            @Html.TextBoxFor(model => model.Username, new { @class = "input", @type = "text", id = "username", placeholder = "Username", required = "required" })
+
+            <label for="password">
+                @Html.LabelFor(model => model.Sifra, new { @class = "label", @type = "password" })
+            </label>
+            @Html.TextBoxFor(model => model.Sifra, new { @class = "input", @type = "password", placeholder = "Password", id = "password", required = "required" })
+
+            <button type="submit">Log In</button>
+            <div class="social">
+                <div class="go"><i class="fab fa-google"></i><a href="@Url.Action("Kompanija", "Home")" style="text-decoration:none;">Create account</a></div>
+            </div>
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+            <div class="form-group">
+                <div style="text-align: center;" class="col-md-offset-2 col-md-2">
+                    <label style=" color:red;" class="label-danger">@ViewBag.ErrorMessage</label>
+                </div>
+            </div>
+            }
+        </form>
+    }
+   
+    @*<form>
+            <h3>Login Here</h3>
+
+            <label for="username">Username</label>
+            <input type="text" placeholder="Email or Phone" id="username">
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="password">
+
+            <button>Log In</button>
+            <div class="social">
+                <div class="go"><i class="fab fa-google"></i>  Create account</div>
+            </div>
+        </form>*@
+</body>
+</html>

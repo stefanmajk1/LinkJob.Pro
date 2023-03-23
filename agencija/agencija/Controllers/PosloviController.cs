@@ -81,7 +81,7 @@ namespace agencija.Controllers
             List<Ogla> oglas = (from o in db.Oglas
                                 join k in db.Kategorijas
                                 on o.idKategorija equals k.idKategorija
-                                where k.naziv == "Sistem Administracija"
+                                where k.naziv == "Sistemska administracija"
                                 select o).ToList();
 
 

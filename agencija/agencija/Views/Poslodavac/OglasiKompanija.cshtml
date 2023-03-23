@@ -1,0 +1,68 @@
+﻿@model IEnumerable<agencija.Models.Ogla>
+
+@{
+    ViewBag.Title = "OglasiKompanija";
+    Layout = "~/Views/Shared/_PoslovniKorisnik.cshtml";
+}
+
+<h2>Oglasi Kompanije</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+           Iskustvo
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kategorija.naziv)
+        </th>
+        
+        <th>
+           Grad
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.naslov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.opis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.poseta)
+        </th>
+        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Iskustvo.naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kategorija.naziv)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesto.naziv)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.naslov)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.opis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.poseta)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Delete", "DeleteOglasKompanije", new { id = item.idOglas })
+            </td>
+        </tr>
+    }
+
+</table>

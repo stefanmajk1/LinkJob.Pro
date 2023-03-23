@@ -24,18 +24,6 @@ namespace agencija.Models
 
         public int brojOglasa { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        public string slika { get; set; }
-
-        [Required]
-        [StringLength(10)]
-        public string istaknut { get; set; }
-
-        public int vremenskiPeriod { get; set; }
-
-        public bool aktivanCenovnik { get; set; }
-
         public int cena { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

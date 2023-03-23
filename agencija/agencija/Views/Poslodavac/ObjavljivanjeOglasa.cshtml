@@ -1,0 +1,173 @@
+﻿@model agencija.Models.VirtualObjavaOglasa
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>ObjavljivanjeOglasa</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/Site.css")
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand"><b href="#" style="color:cornflowerblue">POSLODAVAC@*@Model.naziv*@</b></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pregled oglasa<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+
+                            <li><a href="@Url.Action("OglasiKompanija", "Poslodavac")"><b style="color:gray">Lista Oglasa</b></a></li>
+                            <li><a href="@Url.Action("OglasiKandidati", "Poslodavac")"><b style="color:gray">Kandidati</b></a></li>
+
+
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Objavite oglas", "ObjavljivanjeOglasa", "Poslodavac")</li>
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Agenti<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("AgentiKompanija", "Poslodavac")"><b style="color:gray">Lista Agenata</b></a></li>
+                            <li><a href="@Url.Action("CreateAgentiKompanija", "Poslodavac")"><b style="color:gray">Napravi Agenta</b></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b style="color:gray">User</b><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("KompanijaLogin", "Home")"><b style="color:gray">Logout</b></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav  navbar-right">
+                    <li>@Html.ActionLink("Profil kompanije", "Index", "Poslodavac")</li>
+                </ul>
+                <ul class="nav navbar-nav  navbar-right">
+                    @if (Model == null)
+                    {
+                        <li style="font-weight:bold; margin:auto;"><a>0</a></li>
+
+                    }
+                    else
+                    {
+                        <li style="font-weight:bold; margin:auto;"><a> Broj dostupnih oglasa: @Html.DisplayFor(item => item.oglasi)</a></li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        @if (Model == null)
+        {
+            <h1 style="text-align:center; margin-bottom:30px;">Nemate vise na raspolaganju oglasa</h1>
+            <p class="btn-danger" style="text-align:center; width:100px;  margin:auto; border:2px solid white; border-radius:5px;">
+                <a style="width: 100px; font-size:20px; height: 50px;" href="@Url.Action("KupiOglase", "Poslodavac")" class="btn-danger">Kupi ovde</a>
+            </p>
+        }
+        else
+        {
+            using (Html.BeginForm("ObjavljivanjeOglasa", "Poslodavac", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken();
+                <div class="form-horizontal">
+                    <div style="text-align:center;"><h3 >Napravi oglas</h3></div>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group" style="display:none;">
+                        @Html.LabelFor(model => model.idCenovnikUplataOglasa, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.idCenovnikUplataOglasa, new { htmlAttributes = new { @class = "form-control", Placeholder = Model.idCenovnikUplataOglasa, required = "required " } })
+                            @Html.ValidationMessageFor(model => model.idCenovnikUplataOglasa, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.naslov, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.naslov, new { htmlAttributes = new { @class = "form-control", required = "required " } })
+                            @Html.ValidationMessageFor(model => model.naslov, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.opis, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.opis, new {   style = "resize:none !important; max-width:100% !important; width: 700px !important; height: 320px !important;", required = "required " })
+                            @Html.ValidationMessageFor(model => model.opis, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Kategorija, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("KategorijaLista", (IEnumerable<SelectListItem>)ViewBag.Kategorija_DropDown, "Izaberi Kategoriju", new { @class = "form-control", @id = "combo", required = "required " })
+                            @Html.ValidationMessageFor(model => model.Kategorija.naziv, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Mesto, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("Emp_Dept", (IEnumerable<SelectListItem>)ViewBag.Emp_Data, "Izaberi Mesto", new { @class = "form-control", @id = "combo", required = "required " })
+                            @Html.ValidationMessageFor(model => model.Mesto.naziv, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Iskustvo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("iskustvo", (IEnumerable<SelectListItem>)ViewBag.Emp_Data2, "Izaberi Iskustvo", new { @class = "form-control", @id = "combo", required = "required " })
+                            @Html.ValidationMessageFor(model => model.Iskustvo.naziv, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Publish" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        }
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
