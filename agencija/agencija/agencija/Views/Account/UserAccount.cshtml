@@ -1,0 +1,91 @@
+﻿@model agencija.Models.Korisnik
+@{
+    ViewBag.Title = "UserAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/Account/userSettings.css" rel="stylesheet" />
+@using (Html.BeginForm("UserAccount", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                @if (Model.Slika != null)
+                {
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <td>
+                            <object data="data:application/img;base64,@System.Convert.ToBase64String(Model.Slika)" type="application/img">
+                                <img src="data:application/img;base64,@System.Convert.ToBase64String(Model.Slika)" type="application/img" style="width:200px; height:auto;" id="img" />
+                            </object>
+                        </td>
+                        <label for="image">Select an image:</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img id="imgid" class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><br /><br />
+                        <label for="image">Select an image:</label>
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+
+                }
+
+
+
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="row mt-2">
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Ime, new { @class = "labels" })@Html.TextBoxFor(m => m.Ime, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Ime) })
+                            @Html.ValidationMessageFor(model => model.Ime)
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Prezime, new { @class = "labels" })@Html.TextBoxFor(m => m.Prezime, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Prezime) })
+                            @Html.ValidationMessageFor(model => model.Prezime)
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Sifra, new { @class = "labels" })@Html.TextBoxFor(m => m.Sifra, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Sifra) })
+                            @Html.ValidationMessageFor(model => model.Sifra)
+                        </div>
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Telefon, new { @class = "labels" })@Html.TextBoxFor(m => m.Telefon, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Telefon) })
+                            @Html.ValidationMessageFor(model => model.Telefon)
+                        </div>
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Email, new { @class = "labels" })@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Username, new { @class = "labels" })@Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Username) })
+                            @Html.ValidationMessageFor(model => model.Username)
+                        </div>
+                        <div style="visibility:hidden;" class="col-md-12">
+                            @Html.LabelFor(model => model.idRola, new { @class = "labels" })@Html.TextBoxFor(m => m.idRola, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.idRola) })
+                        </div>
+                        <div style="visibility:hidden;" class="col-md-12">@Html.LabelFor(model => model.IdKorisnik, new { @class = "labels" })@Html.TextBoxFor(m => m.IdKorisnik, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.IdKorisnik) })</div>
+
+                    </div>
+
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div style="margin: auto; width:200px;" class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+    if (ViewBag.Success != null)
+    {
+        <div style="margin: auto; width:200px;" class="alert alert-success">@ViewBag.Success</div>
+    }
+}
+
+
